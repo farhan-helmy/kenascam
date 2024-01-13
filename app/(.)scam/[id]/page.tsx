@@ -63,7 +63,27 @@ const ScamModal = () => {
                     </CardHeader>
                     <CardContent className="grid grid-cols-2 gap-4 space-y-0">
                         <div className="flex justify-center max-h-64">
-                            <Image src="/examplescam2.jpg" alt="example1" height={150} width={150} className="h-auto w-auto object-cover transition-all hover:scale-105" />
+                            <Dialog>
+                                <DialogTrigger>
+                                    <button>
+                                        <Image
+                                            src="/examplescam2.jpg"
+                                            alt="example1"
+                                            height={100}
+                                            width={150}
+                                            className="h-auto w-auto object-cover transition-all hover:scale-105"
+                                        />
+                                    </button>
+                                </DialogTrigger>
+                                <DialogContent>
+                                    <Image
+                                        src="/examplescam2.jpg"
+                                        alt="example1" height={500}
+                                        width={500}
+                                        className="h-auto w-auto object-cover transition-all" />
+                                </DialogContent>
+                            </Dialog>
+
                         </div>
                         <div>
                             <CardTitle className="truncate hover:text-clip max-w-24">Scam APK</CardTitle>
