@@ -19,7 +19,7 @@ import {
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { ArrowDownCircle, ArrowUp, ArrowUpCircleIcon, ArrowUpCircle } from "lucide-react";
+import { ArrowUp, ArrowDown } from "lucide-react";
 import {
     Tooltip,
     TooltipContent,
@@ -31,28 +31,28 @@ const ScamModal = () => {
     const router = useRouter();
     return (
         <Dialog open={true} onOpenChange={() => router.back()}>
-            <DialogContent>
+            <DialogContent >
                 <Card className="border-none">
                     <CardHeader>
                         <div className="flex gap-1">
                             <TooltipProvider>
                                 <Tooltip>
                                     <TooltipTrigger>
-                                        <button>
-                                            <ArrowUpCircle className="w-6 h-6 hover:text-green-600" />
-                                        </button>
+                                        <div>
+                                            <ArrowUp className="w-6 h-6 hover:text-green-600" />
+                                        </div>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p className="text-xs italic">Upvote</p>
+                                        <div className="text-xs italic">Upvote</div>
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
                             <TooltipProvider>
                                 <Tooltip>
                                     <TooltipTrigger>
-                                        <button>
-                                            <ArrowDownCircle className="w-6 h-6 hover:text-red-600" />
-                                        </button>
+                                        <div>
+                                            <ArrowDown className="w-6 h-6 hover:text-red-600" />
+                                        </div>
                                     </TooltipTrigger>
                                     <TooltipContent>
                                         <p className="text-xs italic">Downvote</p>
@@ -65,7 +65,7 @@ const ScamModal = () => {
                         <div className="flex justify-center max-h-64">
                             <Dialog>
                                 <DialogTrigger>
-                                    <button>
+                                    <div>
                                         <Image
                                             src="/examplescam2.jpg"
                                             alt="example1"
@@ -73,7 +73,7 @@ const ScamModal = () => {
                                             width={150}
                                             className="h-auto w-auto object-cover transition-all hover:scale-105"
                                         />
-                                    </button>
+                                    </div>
                                 </DialogTrigger>
                                 <DialogContent>
                                     <Image
@@ -87,8 +87,8 @@ const ScamModal = () => {
                         </div>
                         <div>
                             <CardTitle className="truncate hover:text-clip max-w-24">Scam APK</CardTitle>
-                            <CardDescription>
-                                Ini scam yang mudah
+                            <CardDescription className="max-h-24 overflow-auto pt-4">
+                                INI scam yang terbaikINI scam yang terbaikINI scam yang terbaikINI scam yang terbaikINI scam yang terbaikINI scam yang terbaik
                             </CardDescription>
                             <div className="pt-4 flex flex-col">
                                 <Label>Categories</Label>

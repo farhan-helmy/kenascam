@@ -43,6 +43,7 @@ import {
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import Link from "next/link"
+import UploadForm from "@/components/ui/upload-form"
 
 function ScamCard() {
     return (
@@ -143,6 +144,12 @@ function AddScamForm() {
                             </FormItem>
                         )}
                     />
+
+                    <div className="">
+                        <FormLabel>Picture</FormLabel>
+                       <UploadForm />
+                    </div>
+
                     <Button type="submit">Submit</Button>
                 </form>
             </Form>
