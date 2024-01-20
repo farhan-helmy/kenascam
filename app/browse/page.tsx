@@ -51,9 +51,9 @@ function ScamCard() {
             <CardHeader className="grid items-start gap-4 space-y-0">
                 <div className="space-y-1">
                     <div className="flex justify-center max-h-64">
-                        <Image src="/examplescam2.jpg" alt="example1" height={150} width={200} className="h-auto w-auto object-cover transition-all hover:scale-105" />
+                        <Image src="/examplescam2.jpg" alt="example1" height={150} width={200} className="h-auto w-auto object-cover transition-all hover:scale-105 rounded-xl" />
                     </div>
-                    <CardTitle className="truncate hover:text-clip max-w-24">ScamScamScamScamScamScamScamScamScamScamScamScamScam</CardTitle>
+                    <CardTitle className="truncate hover:text-clip max-w-24 pt-4">ScamScamScamScamScamScamScamScamScamScamScamScamScam</CardTitle>
                     <CardDescription>
                         Ini scam yang mudah
                     </CardDescription>
@@ -147,7 +147,7 @@ function AddScamForm() {
 
                     <div className="">
                         <FormLabel>Picture</FormLabel>
-                       <UploadForm />
+                        <UploadForm />
                     </div>
 
                     <Button type="submit">Submit</Button>
@@ -193,7 +193,7 @@ export default function Browse() {
                     </Dialog>
                 </div>
             </div>
-            <div className="flex items-center justify-center md:px-52 xl:px-52 px-8 pt-4">
+            <div className="flex items-center justify-center sm:px-12 md:px-24 xl:px-52 px-8 pt-4">
                 <div className="md:grid-cols-3 grid gap-4">
                     <Link href="/scam/123" passHref>
                         <ScamCard />

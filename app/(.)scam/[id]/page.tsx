@@ -4,6 +4,7 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -13,6 +14,7 @@ import {
     Card,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
@@ -71,7 +73,7 @@ const ScamModal = () => {
                                             alt="example1"
                                             height={100}
                                             width={150}
-                                            className="h-auto w-auto object-cover transition-all hover:scale-105"
+                                            className="h-auto w-auto object-cover transition-all hover:scale-105 rounded-xl"
                                         />
                                     </div>
                                 </DialogTrigger>
@@ -83,7 +85,6 @@ const ScamModal = () => {
                                         className="h-auto w-auto object-cover transition-all" />
                                 </DialogContent>
                             </Dialog>
-
                         </div>
                         <div>
                             <CardTitle className="truncate hover:text-clip max-w-24">Scam APK</CardTitle>
@@ -101,6 +102,9 @@ const ScamModal = () => {
                                 </div>
                             </div>
                         </div>
+                        <CardFooter>
+                            
+                        </CardFooter>
                     </CardContent>
                 </Card>
             </DialogContent>

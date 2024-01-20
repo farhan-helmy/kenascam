@@ -11,6 +11,7 @@ const s3Client = new S3Client({
   },
 });
 
+
 async function uploadFileToS3(file: Buffer, fileName: string) {
   const fileBuffer = file;
 
@@ -51,33 +52,39 @@ async function uploadFileToS3(file: Buffer, fileName: string) {
   console.log(process.env.AWS_S3_BUCKET_NAME as string)
 
   const command = new PutObjectCommand(params);
+  
   await s3Client.send(command);
   return params.Key;
 }
 
 export async function UploadFile(formData: FormData) {
   try {
-    const file = formData.get("file") as File;
+    const files = formData.getAll("file") as File[];
 
-    if (!file) {
-      throw new Error("No file");
+    if (!files || files.length === 0) {
+      throw new Error("No files");
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const fileName = await uploadFileToS3(buffer, file.name);
+    const results = [];
+
+    for (const file of files) {
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const fileName = await uploadFileToS3(buffer, file.name);
+      results.push({
+        fileName,
+        url: `https://d8f7wymmosp6f.cloudfront.net/${fileName}`,
+      });
+    }
 
     // Revalidate cache
     revalidatePath("/");
 
     return {
       success: true,
-      body: {
-        fileName,
-        url: `https://d8f7wymmosp6f.cloudfront.net/${fileName}`,
-      },
+      body: results,
     };
   } catch (error) {
-    console.log("error: ", error);
+    console.error("Error uploading file:", error);
     throw new Error("Error uploading file");
   }
 }
