@@ -1,16 +1,15 @@
-"use server"
+'use server';
 
-import { revalidatePath } from "next/cache";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { revalidatePath } from 'next/cache';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 const s3Client = new S3Client({
-  region: "ap-southeast-1",
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY as string,
     secretAccessKey: process.env.AWS_SECRET_KEY as string,
   },
+  region: 'ap-southeast-1',
 });
-
 
 async function uploadFileToS3(file: Buffer, fileName: string) {
   const fileBuffer = file;
@@ -18,9 +17,9 @@ async function uploadFileToS3(file: Buffer, fileName: string) {
   // Check file size
   const fileSizeInBytes = fileBuffer.byteLength;
   const fileSizeInMB = fileSizeInBytes / (1024 * 1024);
-  console.log("fileSizeInMB: ", fileSizeInMB);
+  console.log('fileSizeInMB: ', fileSizeInMB);
   if (fileSizeInMB > 2) {
-    throw new Error("File size is too large");
+    throw new Error('File size is too large');
   }
 
   const resizedFile = fileBuffer;
@@ -43,26 +42,26 @@ async function uploadFileToS3(file: Buffer, fileName: string) {
   // console.log("resizedFileSizeInMB: ", resizedFileSizeInMB);
 
   const params = {
-    Bucket: process.env.AWS_S3_BUCKET_NAME as string,
-    Key: `${Date.now()}-${fileName}`,
     Body: resizedFile,
-    ContentType: "*/*",
+    Bucket: process.env.AWS_S3_BUCKET_NAME as string,
+    ContentType: '*/*',
+    Key: `${Date.now()}-${fileName}`,
   };
 
-  console.log(process.env.AWS_S3_BUCKET_NAME as string)
+  console.log(process.env.AWS_S3_BUCKET_NAME as string);
 
   const command = new PutObjectCommand(params);
-  
+
   await s3Client.send(command);
   return params.Key;
 }
 
 export async function UploadFile(formData: FormData) {
   try {
-    const files = formData.getAll("file") as File[];
+    const files = formData.getAll('file') as File[];
 
     if (!files || files.length === 0) {
-      throw new Error("No files");
+      throw new Error('No files');
     }
 
     const results = [];
@@ -77,14 +76,14 @@ export async function UploadFile(formData: FormData) {
     }
 
     // Revalidate cache
-    revalidatePath("/");
+    revalidatePath('/');
 
     return {
-      success: true,
       body: results,
+      success: true,
     };
   } catch (error) {
-    console.error("Error uploading file:", error);
-    throw new Error("Error uploading file");
+    console.error('Error uploading file:', error);
+    throw new Error('Error uploading file');
   }
 }

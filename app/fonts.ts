@@ -1,6 +1,6 @@
-import { Bungee_Spice } from 'next/font/google'
+import { Bungee_Spice } from 'next/font/google';
 
 export const bungee = Bungee_Spice({
-    weight: ["400"],
-    subsets: ["latin"]
-})
+  subsets: ['latin'],
+  weight: ['400'],
+});
