@@ -1,8 +1,7 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-
-export default function LoadingSkeleton() {
+export default function ScamCardSkeleton() {
   return (
     <Card>
       <CardHeader className="grid items-start gap-4 space-y-0">
