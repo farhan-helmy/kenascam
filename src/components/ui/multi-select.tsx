@@ -13,10 +13,10 @@ export type OptionType = {
 };
 
 interface MultiSelectProps {
+  className?: string;
+  onChange: React.Dispatch<React.SetStateAction<string[]>>;
   options: OptionType[];
   selected: string[];
-  onChange: React.Dispatch<React.SetStateAction<string[]>>;
-  className?: string;
 }
 
 function MultiSelect({ options, selected, onChange, className, ...props }: MultiSelectProps) {

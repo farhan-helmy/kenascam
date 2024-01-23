@@ -15,6 +15,7 @@ module.exports = {
     'plugin:react/recommended',
     'prettier',
     'plugin:@tanstack/eslint-plugin-query/recommended',
+    'plugin:typescript-sort-keys/recommended'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -26,7 +27,7 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['sort-keys-fix', '@typescript-eslint', 'import'],
+  plugins: ['sort-keys-fix', '@typescript-eslint', 'import', 'typescript-sort-keys'],
   rules: {
     '@typescript-eslint/no-unused-vars': ['error'],
     '@typescript-eslint/no-unnecessary-condition': 'warn',
