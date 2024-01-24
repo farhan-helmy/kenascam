@@ -19,7 +19,7 @@ interface MultiSelectProps {
   selected: string[];
 }
 
-function MultiSelect({ options, selected, onChange, className, ...props }: MultiSelectProps) {
+function MultiSelect({ className, onChange, options, selected, ...props }: MultiSelectProps) {
   const [open, setOpen] = React.useState(false);
 
   const handleUnselect = (item: string) => {

@@ -27,7 +27,7 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['sort-keys-fix', '@typescript-eslint', 'import', 'typescript-sort-keys'],
+  plugins: ['sort-keys-fix', '@typescript-eslint', 'import', 'typescript-sort-keys', 'sort-destructure-keys'],
   rules: {
     '@typescript-eslint/no-unused-vars': ['error'],
     '@typescript-eslint/no-unnecessary-condition': 'warn',
@@ -86,6 +86,7 @@ module.exports = {
     'react/react-in-jsx-scope': OFF,
     'react/require-default-props': OFF,
     'sort-keys-fix/sort-keys-fix': ERROR,
+    'sort-destructure-keys/sort-destructure-keys': ERROR,
   },
   overrides: [
     {

@@ -4,7 +4,7 @@ export const createScamSchema = z.object({
   description: z.string().min(1, {
     message: 'Description must be at least 1 characters.',
   }),
-  scamName: z.string().min(1, {
+  name: z.string().min(1, {
     message: 'Scam name must be at least 1 characters.',
   }),
 });
