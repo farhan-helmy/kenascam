@@ -7,10 +7,15 @@ import { UploadIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import { XIcon } from 'lucide-react';
 import { useToast } from './use-toast';
-import { UploadFile } from '@/lib/server/s3';
+import { DeleteFile, UploadFile } from '@/lib/server/s3';
 import { Button } from '@/components/ui/button';
 
-const UploadForm = () => {
+type UploadFormProps = {
+  fileKey: string[]
+  setFileKey: (key: string[]) => void
+};
+
+const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
   const toast = useToast();
   const [dragActive, setDragActive] = useState<boolean>(false);
   const [images, setImages] = useState<
@@ -55,6 +60,7 @@ const UploadForm = () => {
         .mutateAsync(formData)
         .then(res => {
           setImages([...res.body]);
+          setFileKey([...fileKey, ...res.body.map(image => image.fileName)]);
           toast.toast({
             description: 'Upload successful!',
             title: 'Success',
@@ -69,6 +75,26 @@ const UploadForm = () => {
         });
     }
   };
+
+  const deleteImage = async (fileName: string) => {
+    const res = await DeleteFile(fileName);
+
+    if (!res.success) {
+      toast.toast({
+        description: "Something went wrong",
+        title: 'Error',
+      });
+      return;
+    }
+
+    toast.toast({
+      description: 'Deleted!',
+      title: 'Success',
+    });
+
+    setImages(images.filter(image => image.fileName !== fileName));
+    setFileKey(fileKey.filter(key => key !== fileName));
+  }
 
   // triggers the input when the button is clicked
   const onButtonClick = () => {
@@ -132,7 +158,9 @@ const UploadForm = () => {
                   src={image.url}
                   width={80}
                 />
-                <XIcon className="absolute right-0 top-0 h-4 w-4 cursor-pointer text-white hover:text-red-600" />
+                <XIcon
+                  onClick={() => deleteImage(image.fileName)}
+                  className="absolute right-0 top-0 h-4 w-4 cursor-pointer text-white hover:text-red-600" />
               </div>
             ))}
           </div>

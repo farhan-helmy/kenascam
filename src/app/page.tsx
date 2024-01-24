@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { bungee } from './fonts';
 
 export const metadata: Metadata = {
-  description: 'Malaysia scam directory',
+  description: 'Malaysia number 1 scam directory',
   title: 'KenaScam',
 };
 

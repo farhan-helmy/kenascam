@@ -9,7 +9,12 @@ import { Textarea } from '@/components/ui/textarea';
 import UploadForm from '@/components/ui/upload-form';
 import { Button } from '@/components/ui/button';
 
-export default function AddScamForm() {
+type AddScamFormProps = {
+  fileKey: string[]
+  setFileKey: (key: string[]) => void
+};
+
+export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
   const form = useForm<CreateScamSchema>({
     defaultValues: {
       description: '',
@@ -66,7 +71,7 @@ export default function AddScamForm() {
 
           <div className="">
             <FormLabel>Picture</FormLabel>
-            <UploadForm />
+            <UploadForm fileKey={fileKey} setFileKey={setFileKey} />
           </div>
 
           <Button type="submit">Submit</Button>

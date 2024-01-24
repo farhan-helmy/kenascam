@@ -6,11 +6,14 @@ import Link from 'next/link';
 import { bungee } from '../fonts';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import ScamCard from '@/containers/browse-page/ScamCard';
-import AddScamForm from '@/containers/browse-page/AddScamForm';
+import ScamCard from './ScamCard';
+import AddScamForm from './AddScamForm';
+import { DeleteFile } from '@/lib/server/s3';
 
 export default function Browse() {
   const [, setLoading] = useState(false);
+
+  const [fileKey, setFileKey] = useState<string[]>([])
 
   useEffect(() => {
     setLoading(true);
@@ -19,6 +22,12 @@ export default function Browse() {
       setLoading(false);
     }, 1000);
   }, []);
+
+  const cleanUpImages = async () => {
+      for (const key of fileKey) {
+        await DeleteFile(key);
+      }
+  }
   return (
     <>
       <div className="sticky top-0 flex w-full justify-between p-4">
@@ -28,7 +37,7 @@ export default function Browse() {
           <DiscordLogoIcon className="h-6 w-6" />
         </div>
         <div>
-          <Dialog>
+          <Dialog onOpenChange={() => cleanUpImages}>
             <DialogTrigger asChild>
               <Button>
                 <PlusCircledIcon className="mr-2" />
@@ -36,7 +45,7 @@ export default function Browse() {
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[500px]">
-              <AddScamForm />
+              <AddScamForm fileKey={fileKey} setFileKey={setFileKey} />
             </DialogContent>
           </Dialog>
         </div>
