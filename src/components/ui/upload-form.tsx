@@ -16,7 +16,7 @@ type UploadFormProps = {
 };
 
 const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
-  const toast = useToast();
+  const {toast} = useToast();
   const [dragActive, setDragActive] = useState<boolean>(false);
   const [images, setImages] = useState<
     {
@@ -61,14 +61,14 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
         .then(res => {
           setImages([...res.body]);
           setFileKey([...fileKey, ...res.body.map(image => image.fileName)]);
-          toast.toast({
+          toast({
             description: 'Upload successful!',
             title: 'Success',
           });
         })
         .catch(err => {
           console.error(err);
-          toast.toast({
+          toast({
             description: err.message || 'An error occurred during upload.',
             title: 'Error',
           });
@@ -80,14 +80,14 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
     const res = await DeleteFile(fileName);
 
     if (!res.success) {
-      toast.toast({
+      toast({
         description: "Something went wrong",
         title: 'Error',
       });
       return;
     }
 
-    toast.toast({
+    toast({
       description: 'Deleted!',
       title: 'Success',
     });
@@ -106,7 +106,7 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
   return (
     <>
       <div
-        className="flex w-full items-center justify-center"
+        className="flex w-full items-center justify-center pt-2"
         id="form-file-upload"
         onDragEnter={handleDrag}
         onSubmit={e => e.preventDefault()}

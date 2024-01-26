@@ -24,9 +24,13 @@ export default function Browse() {
   }, []);
 
   const cleanUpImages = async () => {
-      for (const key of fileKey) {
-        await DeleteFile(key);
+    console.log("cleaning up images")
+    for (const key of fileKey) {
+      const res = await DeleteFile(key);
+      if (res.success) {
+        setFileKey([]);
       }
+    }
   }
   return (
     <>
@@ -37,7 +41,7 @@ export default function Browse() {
           <DiscordLogoIcon className="h-6 w-6" />
         </div>
         <div>
-          <Dialog onOpenChange={() => cleanUpImages}>
+          <Dialog onOpenChange={() => cleanUpImages()}>
             <DialogTrigger asChild>
               <Button>
                 <PlusCircledIcon className="mr-2" />

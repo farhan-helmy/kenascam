@@ -8,6 +8,18 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import UploadForm from '@/components/ui/upload-form';
 import { Button } from '@/components/ui/button';
+import MultipleSelector, {Option} from '@/components/ui/multiple-selector';
+
+const OPTIONS: Option[] = [
+  { label: 'Phishing', value: 'phishing' },
+  { label: 'Social Media', value: 'social-media' },
+  { label: 'Online Shopping', value: 'online-shopping' },
+  { label: 'Financial', value: 'financial' },
+  { label: 'Impersonation', value: 'impersonation' },
+  { label: 'Facebook', value: 'facebook' },
+  { label: 'Whatsapp', value: 'whatsapp' },
+  { label: 'APK', value: 'apk' },
+];
 
 type AddScamFormProps = {
   fileKey: string[]
@@ -19,6 +31,7 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
     defaultValues: {
       description: '',
       scamName: '',
+      labels: []
     },
     resolver: zodResolver(createScamSchema),
   });
@@ -68,9 +81,33 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
               </FormItem>
             )}
           />
+          
+          <FormField
+          control={form.control}
+          name="labels"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Labels</FormLabel>
+              <FormControl>
+                <MultipleSelector
+                  value={field.value}
+                  onChange={field.onChange}
+                  defaultOptions={OPTIONS}
+                  placeholder="Select label for the scam"
+                  emptyIndicator={
+                    <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                      no results found.
+                    </p>
+                  }
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
           <div className="">
-            <FormLabel>Picture</FormLabel>
+            <FormLabel>Upload some picture</FormLabel>
             <UploadForm fileKey={fileKey} setFileKey={setFileKey} />
           </div>
 
