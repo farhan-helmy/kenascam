@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 'use client';
 
 import type { ChangeEvent, DragEventHandler } from 'react';
@@ -81,7 +82,7 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
 
     if (!res.success) {
       toast({
-        description: "Something went wrong",
+        description: 'Something went wrong',
         title: 'Error',
       });
       return;
@@ -159,8 +160,8 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
                   width={80}
                 />
                 <XIcon
-                  onClick={() => deleteImage(image.fileName)}
-                  className="absolute right-0 top-0 h-4 w-4 cursor-pointer text-white hover:text-red-600" />
+                  className="absolute right-0 top-0 h-4 w-4 cursor-pointer text-white hover:text-red-600"
+                  onClick={() => deleteImage(image.fileName)} />
               </div>
             ))}
           </div>
