@@ -1,1 +1,0 @@
-self.__NEXT_FONT_MANIFEST='{"pages":{},"app":{"/Users/fhroslan/dev/kenascam/src/app/layout":["static/media/c9a5bc6a7c948fb0-s.p.woff2"],"/Users/fhroslan/dev/kenascam/src/app/browse/page":["static/media/00e049faa81e4ca2.p.woff2"],"/Users/fhroslan/dev/kenascam/src/app/page":["static/media/00e049faa81e4ca2.p.woff2"]},"appUsingSizeAdjust":true,"pagesUsingSizeAdjust":false}';
