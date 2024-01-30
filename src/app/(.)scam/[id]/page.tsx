@@ -1,20 +1,19 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { ArrowDown, ArrowUp, SendHorizonalIcon, X } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
-import Image from 'next/image';
-import { ArrowDown, ArrowUp, SendHorizonalIcon, SendIcon, X } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+} from '@/components/ui/carousel'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Label } from '@/components/ui/label';
-import { Textarea } from "@/components/ui/textarea"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Textarea } from '@/components/ui/textarea'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const ImageGallery = () => {
   return (
@@ -56,31 +55,37 @@ const ImageGallery = () => {
 const Details = () => {
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className='flex flex-row justify-between items-center'>
         <CardTitle>Scam Name</CardTitle>
+        <div className='flex gap-4'>
+          <div className='flex flex-col items-center justify-center gap-1 text-white hover:text-green-500'>
+            <button>
+              <ArrowUp className="h-4 w-4" />
+            </button>
+          </div>
+          <div className='flex flex-col items-center justify-center gap-1 text-white hover:text-red-500'>
+            <button>
+              <ArrowDown className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
-        <div className="flex flex-row gap-2">
+        <div className='text-sm text-gray-200 break-words max-w-80'>
+          DesriptionDesriptionDesriptionDesriptionDesriptionDesriptionDesriptionDesriptionDesriptionDesription
+        </div>
+        <div className="flex flex-row gap-2 pt-2">
           <Badge variant="destructive">Scam</Badge>
           <Badge variant="secondary">Scam</Badge>
           <Badge variant="secondary">Scam</Badge>
         </div>
-        <div className='flex justify-between px-24 pt-4'>
-          <div className='flex flex-col items-center justify-center gap-1 text-white hover:text-green-500'>
-            <button>
-              <ArrowUp className="h-6 w-6 " />
-            </button>
-            <Label className="text-xs italic font-light">Upvote</Label>
-          </div>
-
-          <div className='flex flex-col items-center justify-center gap-1 text-white hover:text-red-500'>
-            <button>
-              <ArrowDown className="h-6 w-6 " />
-            </button>
-            <Label className="text-xs italic font-light">Downvote</Label>
-          </div>
+        <div className='text-xs pt-4 text-gray-400'>
+          0 Upvote 0 Downvote
         </div>
       </CardContent>
+      <CardFooter className='text-xs text-gray-300'>
+       <p> Uploaded by <span className='text-gray-400'>Anon</span> 1 day ago</p>
+      </CardFooter>
     </Card>
   )
 }
@@ -101,6 +106,7 @@ const CommentSection = () => {
       </Card>
       <div className='flex flex-col pt-8 px-4 gap-2 h-[440px] overflow-auto'>
         {Array.from(Array(10).keys()).map((_, index) => (
+          // eslint-disable-next-line react/no-array-index-key
           <div className='flex flex-row gap-2' key={index}>
             <Avatar>
               <AvatarImage src="https://github.com/farhan-helmy.png" />
@@ -112,7 +118,7 @@ const CommentSection = () => {
                 <span className='text-gray-400'> 1 day ago</span>
               </div>
               <p className='break-words pt-1'>
-                No, I'm not a scammer. I'm just a normal person who wants to scam people. testtttttttttttttttttttesttttttttttttttttttttesttttttttttttttttttttesttttttttttttttttttttesttttttttttttttttttt
+                No, Im not a scammer. Im just a normal person who wants to scam people. testtttttttttttttttttttesttttttttttttttttttttesttttttttttttttttttttesttttttttttttttttttttesttttttttttttttttttt
               </p>
             </div>
           </div>

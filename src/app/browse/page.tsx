@@ -4,10 +4,10 @@ import { DiscordLogoIcon, GitHubLogoIcon, PlusCircledIcon } from '@radix-ui/reac
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { bungee } from '../fonts';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import ScamCard from './ScamCard';
 import AddScamForm from './AddScamForm';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { DeleteFile } from '@/lib/server/s3';
 
 export default function Browse() {
@@ -24,7 +24,7 @@ export default function Browse() {
   }, []);
 
   const cleanUpImages = async () => {
-    console.log("cleaning up images")
+    console.log('cleaning up images')
     for (const key of fileKey) {
       const res = await DeleteFile(key);
       if (res.success) {

@@ -8,7 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import UploadForm from '@/components/ui/upload-form';
 import { Button } from '@/components/ui/button';
-import MultipleSelector, {Option} from '@/components/ui/multiple-selector';
+import type {Option} from '@/components/ui/multiple-selector';
+import MultipleSelector from '@/components/ui/multiple-selector';
 
 const OPTIONS: Option[] = [
   { label: 'Phishing', value: 'phishing' },
@@ -30,8 +31,8 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
   const form = useForm<CreateScamSchema>({
     defaultValues: {
       description: '',
-      scamName: '',
-      labels: []
+      labels: [],
+      scamName: ''
     },
     resolver: zodResolver(createScamSchema),
   });
@@ -90,15 +91,15 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
               <FormLabel>Labels</FormLabel>
               <FormControl>
                 <MultipleSelector
-                  value={field.value}
-                  onChange={field.onChange}
                   defaultOptions={OPTIONS}
-                  placeholder="Select label for the scam"
                   emptyIndicator={
                     <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
                       no results found.
                     </p>
                   }
+                  onChange={field.onChange}
+                  placeholder="Select label for the scam"
+                  value={field.value}
                 />
               </FormControl>
               <FormMessage />
