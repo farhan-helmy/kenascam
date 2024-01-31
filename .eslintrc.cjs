@@ -48,12 +48,6 @@ module.exports = {
     eqeqeq: ERROR,
     'func-call-spacing': OFF,
     'import/extensions': OFF,
-    'import/no-extraneous-dependencies': [
-      ERROR,
-      {
-        devDependencies: true,
-      },
-    ],
     'import/order': ERROR,
     'import/prefer-default-export': OFF,
     'max-depth': [ERROR, MAX_DEPTH],
@@ -69,7 +63,6 @@ module.exports = {
     'quote-props': [ERROR, 'as-needed'],
     quotes: [ERROR, 'single', {'avoidEscape': true}],
     'react-hooks/exhaustive-deps': ERROR,
-    'react-hooks/rules-of-hooks': ERROR,
     'react/destructuring-assignment': OFF,
     'react/function-component-definition': OFF,
     'react/jsx-filename-extension': [

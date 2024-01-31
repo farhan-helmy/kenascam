@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { UploadIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import { XIcon } from 'lucide-react';
-import { useToast } from './use-toast';
+import { toast } from 'sonner'
 import { DeleteFile, UploadFile } from '@/lib/server/s3';
 import { Button } from '@/components/ui/button';
 
@@ -17,7 +17,6 @@ type UploadFormProps = {
 };
 
 const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
-  const {toast} = useToast();
   const [dragActive, setDragActive] = useState<boolean>(false);
   const [images, setImages] = useState<
     {
@@ -62,16 +61,14 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
         .then(res => {
           setImages([...res.body]);
           setFileKey([...fileKey, ...res.body.map(image => image.fileName)]);
-          toast({
-            description: 'Upload successful!',
-            title: 'Success',
+          toast('Image uploaded!', {
+            description: 'Image has been uploaded successfully',
           });
         })
         .catch(err => {
           console.error(err);
-          toast({
+          toast('An error occurred during upload.', {
             description: err.message || 'An error occurred during upload.',
-            title: 'Error',
           });
         });
     }
@@ -81,17 +78,13 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
     const res = await DeleteFile(fileName);
 
     if (!res.success) {
-      toast({
+      toast('Error', {
         description: 'Something went wrong',
-        title: 'Error',
       });
       return;
     }
 
-    toast({
-      description: 'Deleted!',
-      title: 'Success',
-    });
+    toast('Image deleted!');
 
     setImages(images.filter(image => image.fileName !== fileName));
     setFileKey(fileKey.filter(key => key !== fileName));

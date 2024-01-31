@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost', 'd8f7wymmosp6f.cloudfront.net'],
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: 'd8f7wymmosp6f.cloudfront.net'
+    }],
   },
 };
 

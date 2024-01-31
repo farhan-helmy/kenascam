@@ -10,8 +10,9 @@ export const createScamSchema = z.object({
   description: z.string().min(1, {
     message: 'Description must be at least 1 characters.',
   }),
+  fileKey: z.array(z.string()).min(1).optional(),
   labels: z.array(optionSchema).min(1),
-  scamName: z.string().min(1, {
+  name: z.string().min(1, {
     message: 'Scam name must be at least 1 characters.',
   }),
 });
