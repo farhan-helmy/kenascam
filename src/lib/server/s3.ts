@@ -5,10 +5,6 @@ import { revalidatePath } from 'next/cache';
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 const s3Client = new S3Client({
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY as string,
-    secretAccessKey: process.env.AWS_SECRET_KEY as string,
-  },
   region: 'ap-southeast-1',
 });
 

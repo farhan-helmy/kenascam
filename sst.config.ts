@@ -16,6 +16,8 @@ export default {
       stack.addOutputs({
         SiteUrl: site.url,
       });
+
+      site.attachPermissions(['s3'])
     });
   },
 } satisfies SSTConfig;

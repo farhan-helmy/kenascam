@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import type { CreateScamSchema } from '@/zod/schemas/scamForm';
 import { createScamSchema } from '@/zod/schemas/scamForm';
 import { DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -12,7 +13,6 @@ import { Button } from '@/components/ui/button';
 import type { Option } from '@/components/ui/multiple-selector';
 import MultipleSelector from '@/components/ui/multiple-selector';
 import { createScam } from '@/service/scam';
-import { toast } from 'sonner';
 
 const OPTIONS: Option[] = [
   { label: 'Phishing', value: 'phishing' },
