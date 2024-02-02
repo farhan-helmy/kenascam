@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import type { CreateScamSchema } from '@/zod/schemas/scamForm';
 import { createScamSchema } from '@/zod/schemas/scamForm';
-import { DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { DialogContent, DialogDescription, DialogHeader, DialogTitle, Dialog, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import type { Option } from '@/components/ui/multiple-selector';
 import MultipleSelector from '@/components/ui/multiple-selector';
 import { createScam } from '@/service/scam';
+
 
 const OPTIONS: Option[] = [
   { label: 'Phishing', value: 'phishing' },
@@ -23,6 +24,12 @@ const OPTIONS: Option[] = [
   { label: 'Facebook', value: 'facebook' },
   { label: 'Whatsapp', value: 'whatsapp' },
   { label: 'APK', value: 'apk' },
+  { label: 'Shitcoin', value: 'shitcoin' },
+  { label: 'Investment', value: 'investment' },
+  { label: 'Crypto', value: 'crypto' },
+  { label: 'Saham', value: 'saham' },
+  { label: 'Car', value: 'car' },
+  { label: 'Catfish', value: 'catfish' },
 ];
 
 type AddScamFormProps = {
@@ -39,7 +46,7 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
   const form = useForm<CreateScamSchema>({
     defaultValues: {
       description: '',
-      labels: [],
+      categories: [],
       name: ''
     },
     resolver: zodResolver(createScamSchema),
@@ -52,9 +59,9 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
     console.log(values);
 
     createScamMutation.mutateAsync({
+      categories: values.categories,
       description: values.description,
       fileKey: fileKey,
-      labels: values.labels,
       name: values.name
     })
       .then(res => {
@@ -114,10 +121,10 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
 
           <FormField
             control={form.control}
-            name="labels"
+            name="categories"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Labels</FormLabel>
+                <FormLabel>Categories</FormLabel>
                 <FormControl>
                   <MultipleSelector
                     defaultOptions={OPTIONS}
@@ -127,11 +134,30 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
                       </p>
                     }
                     onChange={field.onChange}
-                    placeholder="Select label for the scam"
+                    placeholder="Add categories"
                     value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
+                <FormDescription>
+                  <Dialog>
+                    <DialogTrigger className='text-xs italic'>
+                      Category not available? <span className='underline'>Suggest category</span>  
+                    </DialogTrigger>
+
+                    <DialogContent>
+                      <DialogHeader>
+                        Category suggestion
+                      </DialogHeader>
+                      <Input>
+                      </Input>
+                      <DialogFooter>
+                        <Button>Suggest</Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+
+                </FormDescription>
               </FormItem>
             )}
           />

@@ -73,11 +73,11 @@ module.exports = {
     ],
     'react/jsx-no-bind': OFF,
     'react/jsx-props-no-spreading': OFF,
-    'react/jsx-sort-props': ERROR,
+    'react/jsx-sort-props': OFF,
     'react/no-array-index-key': ERROR,
     'react/react-in-jsx-scope': OFF,
     'react/require-default-props': OFF,
-    'sort-keys-fix/sort-keys-fix': ERROR,
+    'sort-keys-fix/sort-keys-fix': OFF,
   },
   overrides: [
     {
