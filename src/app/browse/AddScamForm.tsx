@@ -30,6 +30,8 @@ const OPTIONS: Option[] = [
   { label: 'Saham', value: 'saham' },
   { label: 'Car', value: 'car' },
   { label: 'Catfish', value: 'catfish' },
+  { label: 'Love', value: 'love' },
+  { label: 'Job', value: 'job' }, 
 ];
 
 type AddScamFormProps = {
