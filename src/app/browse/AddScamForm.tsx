@@ -40,7 +40,8 @@ const OPTIONS: Option[] = [
   { label: 'Mule Account', value: 'mule-account' },
   { label: 'Casino', value: 'casino' },
   { label: 'Gamble', value: 'gamble' },
-  { label: 'Smartphone', value: 'smartphone' }
+  { label: 'Smartphone', value: 'smartphone' },
+  { label: 'Charity', value: 'charity'},
 ];
 
 type AddScamFormProps = {
