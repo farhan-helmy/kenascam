@@ -32,7 +32,16 @@ const OPTIONS: Option[] = [
   { label: 'Catfish', value: 'catfish' },
   { label: 'Love', value: 'love' },
   { label: 'Royalty', value: 'royalty' },
-  { label: 'Porn', value: 'porn' }
+  { label: 'Porn', value: 'porn' },
+  { label: 'Job Scams', value: 'job-scams' },
+  { label: 'Email Scams', value: 'email-scams' },
+  { label: 'Tech Support Scams', value: 'tech-support-scams' },
+  { label: 'Lottery or Prize Scams', value: 'lottery-scams' },
+  { label: 'Rental Scams', value: 'rental-scams' },
+  { label: 'Tax Scams', value: 'tax-scams' },
+  { label: 'Healthcare Scams', value: 'healthcare-scams' },
+  { label: 'Dating Scams', value: 'dating-scams' },
+  { label: 'Travel Scams', value: 'travel-scams' },
 ];
 
 type AddScamFormProps = {
