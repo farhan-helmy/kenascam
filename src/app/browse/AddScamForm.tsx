@@ -36,6 +36,8 @@ const OPTIONS: Option[] = [
   { label: 'Spam', value: 'spam' }, 
   { label: 'Deepfake', value: 'deepfake' }, 
   { label: 'Pharming', value: 'pharming' },
+  { label: 'Job Offer', value: 'job-offer' },
+  { label: 'Mule Account', value: 'mule-account' },
   { label: 'Casino', value: 'casino' },
   { label: 'Gamble', value: 'gamble' },
   { label: 'Smartphone', value: 'smartphone' }
