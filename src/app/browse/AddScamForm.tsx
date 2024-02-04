@@ -35,7 +35,9 @@ const OPTIONS: Option[] = [
   { label: 'Porn', value: 'porn' },
   { label: 'Spam', value: 'spam' }, 
   { label: 'Deepfake', value: 'deepfake' }, 
-  { label: 'Pharming', value: 'pharming' }
+  { label: 'Pharming', value: 'pharming' },
+  { label: 'Job Offer', value: 'job-offer' },
+  { label: 'Mule Account', value: 'mule-account' }
 ];
 
 type AddScamFormProps = {
