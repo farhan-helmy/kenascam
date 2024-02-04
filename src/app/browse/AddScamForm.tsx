@@ -42,6 +42,9 @@ const OPTIONS: Option[] = [
   { label: 'Healthcare Scams', value: 'healthcare-scams' },
   { label: 'Dating Scams', value: 'dating-scams' },
   { label: 'Travel Scams', value: 'travel-scams' },
+  { label: 'Spam', value: 'spam' }, 
+  { label: 'Deepfake', value: 'deepfake' }, 
+  { label: 'Pharming', value: 'pharming' }
 ];
 
 type AddScamFormProps = {
