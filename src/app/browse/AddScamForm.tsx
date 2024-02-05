@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import type { CreateScamSchema } from '@/zod/schemas/scamForm';
 import { createScamSchema } from '@/zod/schemas/scamForm';
@@ -10,9 +10,9 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import UploadForm from '@/components/ui/upload-form';
 import { Button } from '@/components/ui/button';
-import type { Option } from '@/components/ui/multiple-selector';
+// import type { Option } from '@/components/ui/multiple-selector';
 import MultipleSelector from '@/components/ui/multiple-selector';
-import { createScam } from '@/service/scam';
+import { createScam, getCategories } from '@/service/scam';
 
 
 const OPTIONS: Option[] = [
@@ -65,6 +65,12 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
     mutationFn: createScam,
     mutationKey: ['createScam'],
   })
+
+  const categories = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => getCategories()
+  })
+
   const form = useForm<CreateScamSchema>({
     defaultValues: {
       description: '',
@@ -148,23 +154,26 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
               <FormItem>
                 <FormLabel>Categories</FormLabel>
                 <FormControl>
-                  <MultipleSelector
-                    defaultOptions={OPTIONS}
-                    emptyIndicator={
-                      <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                        no results found.
-                      </p>
-                    }
-                    onChange={field.onChange}
-                    placeholder="Add categories"
-                    value={field.value}
-                  />
+                  {categories.isPending ? <p>Fetching categories...</p> : (
+                    <MultipleSelector
+                      defaultOptions={categories.data}
+                      emptyIndicator={
+                        <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                          no results found.
+                        </p>
+                      }
+                      onChange={field.onChange}
+                      placeholder="Add categories"
+                      value={field.value}
+                    />
+                  )}
+
                 </FormControl>
                 <FormMessage />
                 <FormDescription>
                   <Dialog>
                     <DialogTrigger className='text-xs italic'>
-                      Category not available? <span className='underline'>Suggest category</span>  
+                      Category not available? <span className='underline'>Suggest category</span>
                     </DialogTrigger>
 
                     <DialogContent>
