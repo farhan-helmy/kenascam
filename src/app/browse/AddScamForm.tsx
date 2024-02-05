@@ -81,7 +81,10 @@ const OPTIONS: Option[] = [
   { label: 'Online Auctions', value: 'online-auctions' },
   { label: 'Job Opportunities', value: 'job-opportunities' },
   { label: 'Home Repair', value: 'home-repair' },
-  { label: 'Pet', value: 'pet' }
+  { label: 'Pet', value: 'pet' },
+  { label: 'Carousell', value: 'carousell'},
+  { label: 'Lazada', value: 'lazada'}
+  
 ];
 
 type AddScamFormProps = {
