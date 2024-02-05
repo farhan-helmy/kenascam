@@ -15,6 +15,7 @@ import MultipleSelector from '@/components/ui/multiple-selector';
 import { createScam, getCategories } from '@/service/scam';
 
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const OPTIONS: Option[] = [
   { label: 'Phishing', value: 'phishing' },
   { label: 'Social Media', value: 'social-media' },
