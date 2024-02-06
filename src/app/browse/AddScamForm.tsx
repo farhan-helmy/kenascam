@@ -15,6 +15,7 @@ import MultipleSelector from '@/components/ui/multiple-selector';
 import { createScam, getCategories } from '@/service/scam';
 
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const OPTIONS: Option[] = [
   { label: 'Phishing', value: 'phishing' },
   { label: 'Social Media', value: 'social-media' },
@@ -41,10 +42,13 @@ const OPTIONS: Option[] = [
   { label: 'Mule Account', value: 'mule-account' },
   { label: 'Casino', value: 'casino' },
   { label: 'Gamble', value: 'gamble' },
+  { label: 'Advance Fee', value: 'advance-fee' }
   { label: 'Smartphone', value: 'smartphone' }, 
   { label: 'False  Tech Support', value :'false-tech-support'}, 
   { label: 'Property Rental', value :'property-rental'},
   { label: 'Smartphone', value: 'smartphone' },
+  { label: 'Local Authorities', value: 'local-authorities' },
+  { label: 'Parcel', value: 'parcel' },
   { label: 'Charity Fraud', value: 'charity-fraud' },
   { label: 'Lottery', value: 'lottery' },
   { label: 'Tech Support', value: 'tech-support' },
@@ -82,9 +86,9 @@ const OPTIONS: Option[] = [
   { label: 'Job Opportunities', value: 'job-opportunities' },
   { label: 'Home Repair', value: 'home-repair' },
   { label: 'Pet', value: 'pet' },
+  { label: 'Charity', value: 'charity' },
   { label: 'Carousell', value: 'carousell'},
   { label: 'Lazada', value: 'lazada'}
-  
 ];
 
 type AddScamFormProps = {
