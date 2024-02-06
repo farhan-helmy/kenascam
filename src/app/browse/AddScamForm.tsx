@@ -42,7 +42,7 @@ const OPTIONS: Option[] = [
   { label: 'Mule Account', value: 'mule-account' },
   { label: 'Casino', value: 'casino' },
   { label: 'Gamble', value: 'gamble' },
-  { label: 'Advance Fee', value: 'advance-fee' }
+  { label: 'Advance Fee', value: 'advance-fee' },
   { label: 'Smartphone', value: 'smartphone' }, 
   { label: 'False  Tech Support', value :'false-tech-support'}, 
   { label: 'Property Rental', value :'property-rental'},
