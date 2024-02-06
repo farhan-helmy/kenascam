@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import type { CreateScamSchema } from '@/zod/schemas/scamForm';
 import { createScamSchema } from '@/zod/schemas/scamForm';
@@ -10,11 +10,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import UploadForm from '@/components/ui/upload-form';
 import { Button } from '@/components/ui/button';
-import type { Option } from '@/components/ui/multiple-selector';
+// import type { Option } from '@/components/ui/multiple-selector';
 import MultipleSelector from '@/components/ui/multiple-selector';
-import { createScam } from '@/service/scam';
+import { createScam, getCategories } from '@/service/scam';
 
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const OPTIONS: Option[] = [
   { label: 'Phishing', value: 'phishing' },
   { label: 'Social Media', value: 'social-media' },
@@ -29,22 +30,64 @@ const OPTIONS: Option[] = [
   { label: 'Crypto', value: 'crypto' },
   { label: 'Saham', value: 'saham' },
   { label: 'Car', value: 'car' },
+  { label: 'Religion', value:'religion'}, 
   { label: 'Catfish', value: 'catfish' },
   { label: 'Love', value: 'love' },
   { label: 'Royalty', value: 'royalty' },
   { label: 'Porn', value: 'porn' },
-  { label: 'Spam', value: 'spam' }, 
-  { label: 'Deepfake', value: 'deepfake' }, 
+  { label: 'Spam', value: 'spam' },
+  { label: 'Deepfake', value: 'deepfake' },
   { label: 'Pharming', value: 'pharming' },
   { label: 'Job Offer', value: 'job-offer' },
   { label: 'Mule Account', value: 'mule-account' },
   { label: 'Casino', value: 'casino' },
   { label: 'Gamble', value: 'gamble' },
+  { label: 'Online Auction', value: 'online-action' },
+  { label: 'Advance Fee', value: 'advance-fee' },
+  { label: 'Smartphone', value: 'smartphone' }, 
+  { label: 'False  Tech Support', value :'false-tech-support'}, 
+  { label: 'Property Rental', value :'property-rental'},
   { label: 'Smartphone', value: 'smartphone' },
+  { label: 'Local Authorities', value: 'local-authorities' },
+  { label: 'Parcel', value: 'parcel' },
+  { label: 'Charity Fraud', value: 'charity-fraud' },
+  { label: 'Lottery', value: 'lottery' },
+  { label: 'Tech Support', value: 'tech-support' },
+  { label: 'Ransomware', value: 'ransomware' },
+  { label: 'Email Spoofing', value: 'email-spoofing' },
+  { label: 'Identity Theft', value: 'identity-theft' },
+  { label: 'Fake Antivirus', value: 'fake-antivirus' },
+  { label: 'Ponzi Scheme', value: 'ponzi-scheme' },
+  { label: 'Pyramid Scheme', value: 'pyramid-scheme' },
+  { label: 'Healthcare Fraud', value: 'healthcare-fraud' },
+  { label: 'Insurance Fraud', value: 'insurance-fraud' },
   { label: 'Tax', value: 'tax' },
+  { label: 'Real Estate', value: 'real-estate' },
+  { label: 'Fake Scholarships', value: 'fake-scholarships' },
+  { label: 'Crowdfunding Fraud', value: 'crowdfunding-fraud' },
+  { label: 'Data Breach', value: 'data-breach' },
+  { label: 'Subscription', value: 'subscription' },
+  { label: 'Romance', value: 'romance' },
+  { label: 'Fake Shopping Websites', value: 'fake-shopping-websites' },
+  { label: 'Counterfeit Products', value: 'counterfeit-products' },
+  { label: 'Malware', value: 'malware' },
+  { label: 'Gift Card', value: 'gift-card' },
   { label: 'Travel', value: 'travel' },
-  { label: 'Remote Access', value: 'remote-access' },
-  { label: 'Online Auction', value: 'online-action' }
+  { label: 'NFT', value: 'nft' },
+  { label: 'Bank Loan', value: 'bank-loan' },
+  { label: 'Quantum Metal', value: 'quantum-metal' },
+  { label: 'Fake Event Tickets', value: 'fake-event-tickets' },
+  { label: 'Health', value: 'health' },
+  { label: 'Fake News', value: 'fake-news' },
+  { label: 'Online Dating', value: 'online-dating' },
+  { label: 'Credit Card Fraud', value: 'credit-card-fraud' },
+  { label: 'Tech Gadget', value: 'tech-gadget' },
+  { label: 'Fake Software', value: 'fake-software' },
+  { label: 'Online Auctions', value: 'online-auctions' },
+  { label: 'Job Opportunities', value: 'job-opportunities' },
+  { label: 'Home Repair', value: 'home-repair' },
+  { label: 'Pet', value: 'pet' },
+  { label: 'Charity', value: 'charity' },
 ];
 
 type AddScamFormProps = {
@@ -58,6 +101,12 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
     mutationFn: createScam,
     mutationKey: ['createScam'],
   })
+
+  const categories = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => getCategories()
+  })
+
   const form = useForm<CreateScamSchema>({
     defaultValues: {
       description: '',
@@ -141,23 +190,26 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
               <FormItem>
                 <FormLabel>Categories</FormLabel>
                 <FormControl>
-                  <MultipleSelector
-                    defaultOptions={OPTIONS}
-                    emptyIndicator={
-                      <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                        no results found.
-                      </p>
-                    }
-                    onChange={field.onChange}
-                    placeholder="Add categories"
-                    value={field.value}
-                  />
+                  {categories.isPending ? <p>Fetching categories...</p> : (
+                    <MultipleSelector
+                      defaultOptions={categories.data}
+                      emptyIndicator={
+                        <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                          no results found.
+                        </p>
+                      }
+                      onChange={field.onChange}
+                      placeholder="Add categories"
+                      value={field.value}
+                    />
+                  )}
+
                 </FormControl>
                 <FormMessage />
                 <FormDescription>
                   <Dialog>
                     <DialogTrigger className='text-xs italic'>
-                      Category not available? <span className='underline'>Suggest category</span>  
+                      Category not available? <span className='underline'>Suggest category</span>
                     </DialogTrigger>
 
                     <DialogContent>
