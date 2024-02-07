@@ -30,7 +30,7 @@ const OPTIONS: Option[] = [
   { label: 'Crypto', value: 'crypto' },
   { label: 'Saham', value: 'saham' },
   { label: 'Car', value: 'car' },
-  { label: 'Religion', value:'religion'}, 
+  { label: 'Religion', value:'religion'},
   { label: 'Catfish', value: 'catfish' },
   { label: 'Love', value: 'love' },
   { label: 'Royalty', value: 'royalty' },
@@ -42,8 +42,8 @@ const OPTIONS: Option[] = [
   { label: 'Mule Account', value: 'mule-account' },
   { label: 'Casino', value: 'casino' },
   { label: 'Gamble', value: 'gamble' },
-  { label: 'Advance Fee', value: 'advance-fee' }
-  { label: 'Smartphone', value: 'smartphone' }, 
+  { label: 'Advance Fee', value: 'advance-fee' },
+  { label: 'Smartphone', value: 'smartphone' },
   { label: 'False  Tech Support', value :'false-tech-support'}, 
   { label: 'Property Rental', value :'property-rental'},
   { label: 'Smartphone', value: 'smartphone' },
@@ -87,6 +87,7 @@ const OPTIONS: Option[] = [
   { label: 'Home Repair', value: 'home-repair' },
   { label: 'Pet', value: 'pet' },
   { label: 'Charity', value: 'charity' },
+  { label: 'Gold', value: 'gold' }
 ];
 
 type AddScamFormProps = {
