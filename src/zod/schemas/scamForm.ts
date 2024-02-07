@@ -7,7 +7,7 @@ const optionSchema = z.object({
 });
 
 export const createScamSchema = z.object({
-  categories: z.array(optionSchema).min(1),
+  tags: z.array(optionSchema).min(1),
   description: z.string().min(1, {
     message: 'Description must be at least 1 characters.',
   }),

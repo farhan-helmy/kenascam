@@ -115,7 +115,7 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
   const form = useForm<CreateScamSchema>({
     defaultValues: {
       description: '',
-      categories: [],
+      tags: [],
       name: ''
     },
     resolver: zodResolver(createScamSchema),
@@ -128,7 +128,7 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
     console.log(values);
 
     createScamMutation.mutateAsync({
-      categories: values.categories,
+      tags: values.tags,
       description: values.description,
       fileKey: fileKey,
       name: values.name
@@ -190,12 +190,12 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
 
           <FormField
             control={form.control}
-            name="categories"
+            name="tags"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Categories</FormLabel>
+                <FormLabel>Tags</FormLabel>
                 <FormControl>
-                  {categories.isPending ? <p>Fetching categories...</p> : (
+                  {categories.isPending ? <p>Fetching Tags...</p> : (
                     <MultipleSelector
                       defaultOptions={categories.data}
                       emptyIndicator={
@@ -204,7 +204,7 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
                         </p>
                       }
                       onChange={field.onChange}
-                      placeholder="Add categories"
+                      placeholder="Tag this scam"
                       value={field.value}
                     />
                   )}
@@ -214,12 +214,12 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
                 <FormDescription>
                   <Dialog>
                     <DialogTrigger className='text-xs italic'>
-                      Category not available? <span className='underline'>Suggest category</span>
+                      Tag not available? <span className='underline'>Suggest tag</span>
                     </DialogTrigger>
 
                     <DialogContent>
                       <DialogHeader>
-                        Category suggestion
+                        Tag suggestion (Coming soon!)
                       </DialogHeader>
                       <Input>
                       </Input>
