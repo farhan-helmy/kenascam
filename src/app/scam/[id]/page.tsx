@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ArrowDown, ArrowUp, SendHorizonalIcon, X } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Carousel,
   CarouselContent,
@@ -17,7 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import type { Comments, Scam, Image as ImageType } from '@/service/scam';
-import { getScam } from '@/service/scam';
+import { getScammerrr } from '@/service/scam';
 import { transformFormat } from '@/app/browse/page';
 
 type ImageGalleryProps = {
@@ -151,29 +151,32 @@ const CommentSection = ({ comments, loading }: CommenSectionProps) => {
 
 export default function Scam({ params }: { params: { id: string } }) {
   const router = useRouter();
-
+  console.log(params.id)
   const [commentLoading, setCommentLoading] = useState(false);
 
   const scam = useQuery({
-    queryKey: [params.id],
-    queryFn: () => getScam(params.id)
+    queryKey: ['scam'],
+    queryFn: () => getScammerrr(),
   })
 
-  console.log(scam)
+  useEffect(() => {
+   console.log(scam)
+  },[scam])
+
   return (
     <div className="xl:grid lg:grid md:grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3">
       <button className='absolute top-1 left-1'>
         <X className="h-6 w-6 text-white hover:text-gray-500" onClick={() => router.back()} />
       </button>
       <div className="xl:col-span-2 lg:col-span-2 md:col-span-2">
-        <ImageGallery images={scam.data?.images as ImageType[]} />
+        {/* <ImageGallery images={scam.data?.images as ImageType[]} /> */}
       </div>
       <div className="flex flex-col p-4">
         <div className='rounded-md w-full'>
-          <Details scam={scam.data as Scam} />
+         {/*  <Details scam={scam.data as Scam} /> */}
         </div>
         <div className='pt-4'>
-          <CommentSection comments={scam.data?.comments as Comments[]} loading={commentLoading} />
+          {/*  <CommentSection comments={scam.data?.comments as Comments[]} loading={commentLoading} /> */}
         </div>
       </div>
     </div>

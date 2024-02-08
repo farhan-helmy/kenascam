@@ -45,8 +45,9 @@ export type Scam = {
     updatedAt: string;
 }
 
-export const getScam = async (id: string): Promise<Scam> => {
-    const response = await fetch(`${process.env.BACKEND_URL}/scam/${id}`, {
+export const getScammerrr = async (): Promise<Scam> => {
+    console.log("=>>>>> id")
+    const response = await fetch(`${process.env.BACKEND_URL}/scam/pccam166a85jr8m29o062spf`, {
         cache: 'no-store',
         headers: {
             'Content-Type': 'application/json'
