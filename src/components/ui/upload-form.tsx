@@ -144,13 +144,13 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
           <div className="text-xs">Images</div>
           <div className="flex flex-row gap-2">
             {images.map(image => (
-              <div className="relative" key={image.fileName}>
+              <div className="relative h-24" key={image.fileName}>
                 <Image
                   alt={image.fileName}
                   className="rounded-md border border-red-400"
-                  height={120}
+                  height={150}
                   src={image.url}
-                  width={80}
+                  width={200}
                 />
                 <XIcon
                   className="absolute right-0 top-0 h-4 w-4 cursor-pointer text-white hover:text-red-600"

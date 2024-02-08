@@ -1,4 +1,6 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+'use client'
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ScamCardSkeleton() {
@@ -12,9 +14,7 @@ export default function ScamCardSkeleton() {
           <CardTitle className="max-w-24">
             <Skeleton className="h-4 w-[200px]" />
           </CardTitle>
-          <CardDescription>
-            <Skeleton className="h-4 w-[200px]" />
-          </CardDescription>
+          <Skeleton className="h-4 w-[200px]" />
         </div>
       </CardHeader>
       <CardContent>
