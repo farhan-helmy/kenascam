@@ -1,7 +1,10 @@
+'use client'
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { useState } from 'react';
 import type { CreateScamSchema } from '@/zod/schemas/scamForm';
 import { createScamSchema } from '@/zod/schemas/scamForm';
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle, Dialog, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
@@ -12,11 +15,13 @@ import UploadForm from '@/components/ui/upload-form';
 import { Button } from '@/components/ui/button';
 // import type { Option } from '@/components/ui/multiple-selector';
 import MultipleSelector from '@/components/ui/multiple-selector';
-import { createScam, getCategories } from '@/service/scam';
-
+import { createScam, getTags } from '@/service/scam';
+import { Checkbox } from '@/components/ui/checkbox';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Label } from '@/components/ui/label';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const OPTIONS: Option[] = [
+const OPTIONS = [
   { label: 'Phishing', value: 'phishing' },
   { label: 'Social Media', value: 'social-media' },
   { label: 'Online Shopping', value: 'online-shopping' },
@@ -30,7 +35,7 @@ const OPTIONS: Option[] = [
   { label: 'Crypto', value: 'crypto' },
   { label: 'Saham', value: 'saham' },
   { label: 'Car', value: 'car' },
-  { label: 'Religion', value:'religion'},
+  { label: 'Religion', value: 'religion' },
   { label: 'Catfish', value: 'catfish' },
   { label: 'Love', value: 'love' },
   { label: 'Royalty', value: 'royalty' },
@@ -44,8 +49,8 @@ const OPTIONS: Option[] = [
   { label: 'Gamble', value: 'gamble' },
   { label: 'Advance Fee', value: 'advance-fee' },
   { label: 'Smartphone', value: 'smartphone' },
-  { label: 'False  Tech Support', value :'false-tech-support'}, 
-  { label: 'Property Rental', value :'property-rental'},
+  { label: 'False  Tech Support', value: 'false-tech-support' },
+  { label: 'Property Rental', value: 'property-rental' },
   { label: 'Smartphone', value: 'smartphone' },
   { label: 'Local Authorities', value: 'local-authorities' },
   { label: 'Parcel', value: 'parcel' },
@@ -98,9 +103,77 @@ const OPTIONS: Option[] = [
 type AddScamFormProps = {
   fileKey: string[]
   setFileKey: (key: string[]) => void
+  setCreateScamSuccess: (val: boolean) => void
 };
 
-export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
+function ScamSourceInput({ platform, setScammerInfo }: { platform: string, setScammerInfo: (val: string) => void }) {
+
+  switch (platform) {
+    case 'facebook':
+      return (
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="Facebook">Scammer FB profile or page URL</Label>
+          <Input type="text" id="facebook" placeholder="https://www.facebook.com/scammer-name" onChange={e => { setScammerInfo(e.target.value) }} />
+        </div>
+      )
+    case 'whatsapp':
+      return (
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="Whatsapp">Scammer Whatsapp number</Label>
+          <Input type="Whatsapp" id="Whatsapp" placeholder="eg: 0123456789" onChange={e => { setScammerInfo(e.target.value) }} />
+        </div>
+      )
+    case 'x':
+      return (
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="X">Scammer X account</Label>
+          <Input type="X" id="X" placeholder="https://x.com/scammer-name" onChange={e => { setScammerInfo(e.target.value) }} />
+        </div>
+      )
+    case 'telegram':
+      return (
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="telegram">Scammer Telegram username</Label>
+          <Input type="telegram" id="telegram" placeholder="@scammer-name" onChange={e => { setScammerInfo(e.target.value) }} />
+        </div>
+      )
+    case 'phone-call':
+      return (
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="phone-call">Scammer phone number</Label>
+          <Input type="phone-call" id="phone-call" placeholder="eg: 0123456789" onChange={e => { setScammerInfo(e.target.value) }} />
+        </div>
+      )
+    case 'email':
+      return (
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="email">Scammer email</Label>
+          <Input type="email" id="email" placeholder="scammer-email@scammer.com" onChange={e => { setScammerInfo(e.target.value) }} />
+        </div>
+      )
+    case 'other':
+      return (
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="other">Other link</Label>
+          <Input type="other" id="other" placeholder="Enter other source" onChange={e => { setScammerInfo(e.target.value) }} />
+        </div>
+      )
+    default:
+      return (
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="Facebook">Scammer FB profile or page URL</Label>
+          <Input type="text" id="facebook" placeholder="https://www.facebook.com/scammer-name" onChange={e => { setScammerInfo(e.target.value) }} />
+        </div>
+      )
+
+  }
+}
+
+export default function AddScamForm({ fileKey, setFileKey, setCreateScamSuccess }: AddScamFormProps) {
+
+  const [openScamPlatform, setOpenScamPlatform] = useState(false)
+  const [scamSource, setScamSource] = useState('')
+  const [scammerInfo, setScammerInfo] = useState('')
 
   const createScamMutation = useMutation({
     mutationFn: createScam,
@@ -108,8 +181,8 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
   })
 
   const categories = useQuery({
-    queryKey: ['categories'],
-    queryFn: () => getCategories()
+    queryKey: ['tags'],
+    queryFn: () => getTags()
   })
 
   const form = useForm<CreateScamSchema>({
@@ -131,10 +204,15 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
       tags: values.tags,
       description: values.description,
       fileKey: fileKey,
-      name: values.name
+      name: values.name,
+      platform: scamSource,
+      scammerInfo
     })
       .then(res => {
         console.log(res)
+        if (res.status === 201) {
+          setCreateScamSuccess(true)
+        }
         toast('Scam added!', {
           description: 'Scam has been added successfully, please wait for admin approval',
         })
@@ -165,7 +243,7 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
               <FormItem>
                 <FormLabel>Scam name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Online scam..." {...field} />
+                  <Input placeholder="Pak man telo" {...field} />
                 </FormControl>
                 <FormDescription>Name of the scam eg: &quot;APK scam, Online scam&quot;.</FormDescription>
                 <FormMessage />
@@ -180,13 +258,70 @@ export default function AddScamForm({ fileKey, setFileKey }: AddScamFormProps) {
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea className="resize-none" placeholder="This scam is related to..." {...field} />
+                  <Textarea className="resize-none" placeholder="Scam yang sangat teruk" {...field} />
                 </FormControl>
                 <FormDescription>Explain a little bit about the scam.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
+
+          <div className="flex items-center py-2 space-x-2">
+            <Checkbox id="scam-platform" checked={openScamPlatform} onCheckedChange={() => setOpenScamPlatform(!openScamPlatform)} />
+            <label
+              htmlFor="scam-platform"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              This scam is being done at a platform
+            </label>
+          </div>
+
+          {
+            openScamPlatform ? (
+              <>
+                <div className='py-2'>
+                  <RadioGroup defaultValue="facebook" onValueChange={val => { setScamSource(val) }}>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="facebook" id="facebook" />
+
+                      <Label htmlFor="facebook">Facebook</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="whatsapp" id="whatsapp" />
+
+                      <Label htmlFor="whatsapp">Whatsapp</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="x" id="x" />
+
+                      <Label htmlFor="x">X</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="telegram" id="telegram" />
+
+                      <Label htmlFor="telegram">Telegram</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="phone-call" id="phone-call" />
+
+                      <Label htmlFor="phone-call">Phone call</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="email" id="email" />
+
+                      <Label htmlFor="email">Email</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="other" id="other" />
+
+                      <Label htmlFor="other">Other</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+                <ScamSourceInput platform={scamSource} setScammerInfo={setScammerInfo} />
+              </>
+            ) : ''
+          }
 
           <FormField
             control={form.control}

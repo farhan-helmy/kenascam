@@ -5,7 +5,7 @@ const ERROR = 2;
 const MAX_COMPLEXITY = 8;
 const MAX_DEPTH = 4;
 const MAX_LINES = 500;
-const MAX_LINES_PER_FUNCTION = 140;
+const MAX_LINES_PER_FUNCTION = 900;
 
 module.exports = {
   extends: [

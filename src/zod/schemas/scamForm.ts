@@ -15,6 +15,8 @@ export const createScamSchema = z.object({
   name: z.string().min(1, {
     message: 'Scam name must be at least 1 characters.',
   }),
+  platform: z.string().optional(),
+  scammerInfo: z.string().optional(),
 });
 
 export type CreateScamSchema = z.infer<typeof createScamSchema>;
