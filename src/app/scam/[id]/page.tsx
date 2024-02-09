@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ArrowDown, ArrowUp, SendHorizonalIcon, X } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 import {
   Carousel,
   CarouselContent,
@@ -36,7 +35,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
                   <Image
                     alt="scam"
                     height={500}
-                    src={image.url}
+                    src={`https://d8f7wymmosp6f.cloudfront.net/${image.url}`}
                     width={500}
                   />
                 </CardContent>
@@ -79,7 +78,7 @@ const Details = ({ scam }: DetailProps) => {
         </div>
         <div className="flex flex-row gap-2 pt-2">
           {scam.scamToTags.map(tag => (
-            <Badge key={tag.tagId} variant="destructive">{transformFormat(tag.tagId)}</Badge>
+            <Badge key={tag.tagId} variant="destructive" className='text-[10px]'>{transformFormat(tag.tagId)}</Badge>
           ))}
         </div>
         <div className='text-xs pt-4 text-gray-400'>
@@ -151,17 +150,17 @@ const CommentSection = ({ comments, loading }: CommenSectionProps) => {
 
 export default function Scam({ params }: { params: { id: string } }) {
   const router = useRouter();
-  console.log(params.id)
-  const [commentLoading, setCommentLoading] = useState(false);
 
   const scam = useQuery({
     queryKey: ['scam'],
     queryFn: () => getScammerrr(),
   })
 
-  useEffect(() => {
-   console.log(scam)
-  },[scam])
+  console.log(scam)
+
+  if (scam.isPending) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="xl:grid lg:grid md:grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3">
@@ -176,7 +175,7 @@ export default function Scam({ params }: { params: { id: string } }) {
          {/*  <Details scam={scam.data as Scam} /> */}
         </div>
         <div className='pt-4'>
-          {/*  <CommentSection comments={scam.data?.comments as Comments[]} loading={commentLoading} /> */}
+          <CommentSection comments={scam.data?.comments as Comments[]} />
         </div>
       </div>
     </div>

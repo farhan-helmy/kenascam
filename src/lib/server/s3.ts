@@ -6,6 +6,10 @@ import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client
 
 const s3Client = new S3Client({
   region: 'ap-southeast-1',
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
+  },
 });
 
 async function uploadFileToS3(file: Buffer, fileName: string) {
