@@ -97,7 +97,9 @@ const OPTIONS = [
   { label: 'Online Extortion', value: 'online-extortion' },
   { label: 'Quid Pro Quo', value: 'quid-pro-quo' },
   { label: 'Charity', value: 'charity' },
-  { label: 'Gold', value: 'gold' }
+  { label: 'Gold', value: 'gold' },
+  { label: 'Forex', value: 'forex' },
+  { label: 'Trading', value: 'trading' }
 ];
 
 type AddScamFormProps = {
