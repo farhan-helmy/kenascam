@@ -43,11 +43,12 @@ export type Scam = {
     scamToTags: ScamToTag[];
     createdAt: string;
     updatedAt: string;
+    upvotes: number;
+    downvotes: number;
 }
 
-export const getScammerrr = async (): Promise<Scam> => {
-    console.log("=>>>>> id")
-    const response = await fetch(`${process.env.BACKEND_URL}/scam/pccam166a85jr8m29o062spf`, {
+export const getScam = async (id: string): Promise<Scam> => {
+    const response = await fetch(`${process.env.BACKEND_URL}/scam/${id}`, {
         cache: 'no-store',
         headers: {
             'Content-Type': 'application/json'
@@ -92,7 +93,7 @@ export const getTags = async (): Promise<Categories[]> => {
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'GET'
+    method: 'GET'
     })
 
     const resData = await response.json() as CategoriesResponse[]
@@ -103,4 +104,16 @@ export const getTags = async (): Promise<Categories[]> => {
             value: category.value
         }
     })
+}
+
+export const voteScam = async ({ id, action }: { id: string, action: 'upvote' | 'downvote' }) => {
+    const response = await fetch(`${process.env.BACKEND_URL}/scam/${id}?action=${action}`, {
+        cache: 'no-store',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST'
+    })
+
+    return await response.json()
 }

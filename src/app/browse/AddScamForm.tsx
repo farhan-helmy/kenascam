@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import type { CreateScamSchema } from '@/zod/schemas/scamForm';
 import { createScamSchema } from '@/zod/schemas/scamForm';
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle, Dialog, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
@@ -175,6 +176,8 @@ export default function AddScamForm({ fileKey, setFileKey, setCreateScamSuccess 
   const [scamSource, setScamSource] = useState('')
   const [scammerInfo, setScammerInfo] = useState('')
 
+  const router = useRouter()
+
   const createScamMutation = useMutation({
     mutationFn: createScam,
     mutationKey: ['createScam'],
@@ -209,9 +212,9 @@ export default function AddScamForm({ fileKey, setFileKey, setCreateScamSuccess 
       scammerInfo
     })
       .then(res => {
-        console.log(res)
         if (res.status === 201) {
           setCreateScamSuccess(true)
+          router.push('/')
         }
         toast('Scam added!', {
           description: 'Scam has been added successfully, please wait for admin approval',
@@ -374,7 +377,7 @@ export default function AddScamForm({ fileKey, setFileKey, setCreateScamSuccess 
             <UploadForm fileKey={fileKey} setFileKey={setFileKey} />
           </div>
 
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={createScamMutation.isPending}>{createScamMutation.isPending ? 'Loading' : 'Submit'}</Button>
         </form>
       </Form>
     </>

@@ -14,7 +14,9 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.490.0",
     "@aws-sdk/s3-request-presigner": "^3.490.0",
+    "@clickhouse/client": "^0.2.9",
     "@hookform/resolvers": "^3.3.4",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -31,6 +33,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.0",
+    "dayjs": "^1.11.10",
     "embla-carousel-react": "^8.0.0-rc20",
     "framer-motion": "^11.0.3",
     "ky": "^1.2.0",

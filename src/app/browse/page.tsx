@@ -1,10 +1,12 @@
 'use client';
 
 import { DiscordLogoIcon, GitHubLogoIcon, PlusCircledIcon } from '@radix-ui/react-icons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { bungee } from '../fonts';
 import AddScamForm from './AddScamForm';
 import ScamCardSkeleton from './skeleton';
@@ -19,7 +21,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { getScams } from '@/service/scam';
-import { Badge } from '@/components/ui/badge';
 
 type ScamCardProps = {
   name: string;
@@ -61,11 +62,9 @@ function ScamCard({ name, description, createdAt, tags, fileKey }: ScamCardProps
         </div>
       </CardHeader>
       <CardContent>
-        <div className="flex justify-between text-sm text-muted-foreground relative overflow-hidden">
+        <div className="flex flex-col gap-y-4 text-sm text-muted-foreground relative overflow-hidden">
           <div className="flex items-center">
-            <Badge className='text-xs'>
-              {transformFormat(tags[0])}
-            </Badge>
+            <div className='rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 max-width-24 truncate items-start justify-start hover:text-clip bg-white text-black'>{transformFormat(tags[0])}</div>
             {(tags.length - 1 !== 0) ?
               (
                 <div className='text-xs font-bold text-white px-2'>
@@ -75,8 +74,9 @@ function ScamCard({ name, description, createdAt, tags, fileKey }: ScamCardProps
               : null
             }
           </div>
+          
           <div className="transition-transform group-hover:translate-y-6 text-xs text-white font-light">
-            Uploaded on {createdAt ? new Date(createdAt).toLocaleDateString() : 'Unknown'}
+            Uploaded {createdAt}
           </div>
           <div className="text-blue-500 absolute right-0 -bottom-6 transition-transform group-hover:-translate-y-6 group-hover:duration-300">
             Click to explore
@@ -87,10 +87,8 @@ function ScamCard({ name, description, createdAt, tags, fileKey }: ScamCardProps
   );
 }
 
-
-
 export default function Browse() {
-  const [, setLoading] = useState(false);
+  dayjs.extend(relativeTime)
 
   const [fileKey, setFileKey] = useState<string[]>([])
   const [createScamSuccess, setCreateScamSuccess] = useState(false)
@@ -103,13 +101,7 @@ export default function Browse() {
     queryFn: () => getScams(),
   })
 
-  useEffect(() => {
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+  console.log('scams', scams)
 
   const cleanUpImages = async () => {
     if (createScamSuccess) return
@@ -164,7 +156,7 @@ export default function Browse() {
                   key={scam.id}
                   name={scam.name}
                   description={scam.description}
-                  createdAt={scam.createdAt}
+                  createdAt={dayjs(scam.createdAt).fromNow()}
                   tags={scam.scamToTags.map(tag => tag.tagId)}
                   fileKey={scam.images.map(image => image.url)}
                 />
