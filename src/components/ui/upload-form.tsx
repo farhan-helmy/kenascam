@@ -7,13 +7,13 @@ import { useMutation } from '@tanstack/react-query';
 import { UploadIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import { XIcon } from 'lucide-react';
-import { toast } from 'sonner'
+import { toast } from 'sonner';
 import { DeleteFile, UploadFile } from '@/lib/server/s3';
 import { Button } from '@/components/ui/button';
 
 type UploadFormProps = {
-  fileKey: string[]
-  setFileKey: (key: string[]) => void
+  fileKey: string[];
+  setFileKey: (key: string[]) => void;
 };
 
 const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
@@ -88,7 +88,7 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
 
     setImages(images.filter(image => image.fileName !== fileName));
     setFileKey(fileKey.filter(key => key !== fileName));
-  }
+  };
 
   // triggers the input when the button is clicked
   const onButtonClick = () => {
@@ -154,7 +154,8 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
                 />
                 <XIcon
                   className="absolute right-0 top-0 h-4 w-4 cursor-pointer text-white hover:text-red-600"
-                  onClick={() => deleteImage(image.fileName)} />
+                  onClick={() => deleteImage(image.fileName)}
+                />
               </div>
             ))}
           </div>

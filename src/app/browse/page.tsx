@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { bungee } from '../fonts';
 import AddScamForm from './AddScamForm';
@@ -13,13 +13,7 @@ import ScamCardSkeleton from './skeleton';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { DeleteFile } from '@/lib/server/s3';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getScams } from '@/service/scam';
 
 type ScamCardProps = {
@@ -30,7 +24,7 @@ type ScamCardProps = {
   fileKey: string[];
   tags: string[];
   createdAt: string;
-}
+};
 
 export function transformFormat(input: string): string {
   if (input.includes('-')) {
@@ -46,7 +40,7 @@ function ScamCard({ name, description, createdAt, tags, fileKey }: ScamCardProps
     <Card className="group relative">
       <CardHeader className="grid items-start gap-4 space-y-0">
         <div className="space-y-1">
-          <div className="flex max-h-64 h-64 justify-center">
+          <div className="flex h-64 max-h-64 justify-center">
             <Image
               alt="example1"
               className="h-auto w-auto rounded-xl object-cover transition-all hover:scale-105"
@@ -55,30 +49,25 @@ function ScamCard({ name, description, createdAt, tags, fileKey }: ScamCardProps
               width={200}
             />
           </div>
-          <CardTitle className="max-w-24 truncate pt-4 hover:text-clip">
-            {name}
-          </CardTitle>
+          <CardTitle className="max-w-24 truncate pt-4 hover:text-clip">{name}</CardTitle>
           <CardDescription>{description}</CardDescription>
         </div>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col gap-y-4 text-sm text-muted-foreground relative overflow-hidden">
+        <div className="text-muted-foreground relative flex flex-col gap-y-4 overflow-hidden text-sm">
           <div className="flex items-center">
-            <div className='rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 max-width-24 truncate items-start justify-start hover:text-clip bg-white text-black'>{transformFormat(tags[0])}</div>
-            {(tags.length - 1 !== 0) ?
-              (
-                <div className='text-xs font-bold text-white px-2'>
-                  + {tags.length - 1} more
-                </div>
-              )
-              : null
-            }
+            <div className="focus:ring-ring max-width-24 items-start justify-start truncate rounded-md border bg-white px-2.5 py-0.5 text-xs font-semibold text-black transition-colors hover:text-clip focus:outline-none focus:ring-2 focus:ring-offset-2">
+              {transformFormat(tags[0])}
+            </div>
+            {tags.length - 1 !== 0 ? (
+              <div className="px-2 text-xs font-bold text-white">+ {tags.length - 1} more</div>
+            ) : null}
           </div>
-          
-          <div className="transition-transform group-hover:translate-y-6 text-xs text-white font-light">
+
+          <div className="text-xs font-light text-white transition-transform group-hover:translate-y-6">
             Uploaded {createdAt}
           </div>
-          <div className="text-blue-500 absolute right-0 -bottom-6 transition-transform group-hover:-translate-y-6 group-hover:duration-300">
+          <div className="absolute -bottom-6 right-0 text-blue-500 transition-transform group-hover:-translate-y-6 group-hover:duration-300">
             Click to explore
           </div>
         </div>
@@ -88,27 +77,24 @@ function ScamCard({ name, description, createdAt, tags, fileKey }: ScamCardProps
 }
 
 export default function Browse() {
-  dayjs.extend(relativeTime)
+  dayjs.extend(relativeTime);
 
-  const [fileKey, setFileKey] = useState<string[]>([])
-  const [createScamSuccess, setCreateScamSuccess] = useState(false)
+  const [fileKey, setFileKey] = useState<string[]>([]);
+  const [createScamSuccess, setCreateScamSuccess] = useState(false);
 
   const skeletonCards = new Array(12).fill(null);
-
 
   const scams = useQuery({
     queryKey: ['scams'],
     queryFn: () => getScams(),
-  })
-
-  console.log('scams', scams)
+  });
 
   const cleanUpImages = async () => {
-    if (createScamSuccess) return
+    if (createScamSuccess) return;
 
-    if (fileKey.length === 0) return
+    if (fileKey.length === 0) return;
 
-    console.log('---cleaning up images---')
+    console.log('---cleaning up images---');
 
     for (const key of fileKey) {
       const res = await DeleteFile(key);
@@ -117,7 +103,7 @@ export default function Browse() {
         setCreateScamSuccess(false);
       }
     }
-  }
+  };
   return (
     <>
       <div className="sticky top-0 flex w-full justify-between p-4">
@@ -128,7 +114,7 @@ export default function Browse() {
           </Link>
           <DiscordLogoIcon className="h-6 w-6" />
         </div>
-        <div className='max-h-screen'>
+        <div className="max-h-screen">
           <Dialog onOpenChange={() => cleanUpImages()}>
             <DialogTrigger asChild>
               <Button>
@@ -136,7 +122,7 @@ export default function Browse() {
                 Scam
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[500px] overflow-auto max-h-screen">
+            <DialogContent className="max-h-screen overflow-auto sm:max-w-[500px]">
               <AddScamForm fileKey={fileKey} setFileKey={setFileKey} setCreateScamSuccess={setCreateScamSuccess} />
             </DialogContent>
           </Dialog>
@@ -144,26 +130,23 @@ export default function Browse() {
       </div>
       <div className="flex items-center justify-center px-8 pt-4 sm:px-12 md:px-24 xl:px-52">
         <div className="grid gap-4 md:grid-cols-3">
-          {scams.isLoading ? (
-            skeletonCards.map((_, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <ScamCardSkeleton key={index} />
-            ))
-          ) : (
-            scams.data?.map(scam => (
-              <Link key={scam.id} href={`/scam/${scam.id}`} scroll>
-                <ScamCard
-                  key={scam.id}
-                  name={scam.name}
-                  description={scam.description}
-                  createdAt={dayjs(scam.createdAt).fromNow()}
-                  tags={scam.scamToTags.map(tag => tag.tagId)}
-                  fileKey={scam.images.map(image => image.url)}
-                />
-              </Link>
-            ))
-          )}
-
+          {scams.isLoading
+            ? skeletonCards.map((_, index) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <ScamCardSkeleton key={index} />
+              ))
+            : scams.data?.map(scam => (
+                <Link key={scam.id} href={`/scam/${scam.id}`} scroll>
+                  <ScamCard
+                    key={scam.id}
+                    name={scam.name}
+                    description={scam.description}
+                    createdAt={dayjs(scam.createdAt).fromNow()}
+                    tags={scam.scamToTags.map(tag => tag.tagId)}
+                    fileKey={scam.images.map(image => image.url)}
+                  />
+                </Link>
+              ))}
         </div>
       </div>
     </>

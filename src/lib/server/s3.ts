@@ -3,7 +3,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
-import { createId } from '@paralleldrive/cuid2'
+import { createId } from '@paralleldrive/cuid2';
 
 const s3Client = new S3Client({
   region: 'ap-southeast-1',
@@ -89,7 +89,7 @@ export async function DeleteFile(key: string) {
     const command = new DeleteObjectCommand(params);
     const res = await s3Client.send(command);
 
-    console.log(res)
+    console.log(res);
     return {
       success: true,
     };
