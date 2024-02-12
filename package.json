@@ -39,7 +39,7 @@
     "embla-carousel-react": "^8.0.0-rc20",
     "framer-motion": "^11.0.3",
     "ky": "^1.2.0",
-    "lucide-react": "^0.309.0",
+    "lucide-react": "^0.330.0",
     "next": "14.0.4",
     "next-themes": "^0.2.1",
     "react": "^18",
