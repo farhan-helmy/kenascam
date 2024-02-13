@@ -8,8 +8,8 @@ import { createId } from '@paralleldrive/cuid2';
 const s3Client = new S3Client({
   region: 'ap-southeast-1',
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID_FARHAN as string,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_FARHAN as string,
   },
 });
 

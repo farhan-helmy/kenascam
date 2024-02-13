@@ -20,7 +20,7 @@ export async function generateMetadata({
   const data = await getScam(params.id);
   const tags = data.scamToTags.map(tag => transformFormat(tag.tagId));
   const joinedTags = tags.join(',');
-  const ogImage = `https://staging.kenascam.xyz/og?title=${data.name}&description=${data.description}&authorName=anonymous&authorImage=${data.images[0].url}&tags=${joinedTags}`;
+  const ogImage = `https://staging.kenascam.xyz/og?title=${data.name}&description=${data.description}&authorName=anonymous&authorImage=https://d8f7wymmosp6f.cloudfront.net/${data.images[0].url}&tags=${joinedTags}`;
   return {
     title: `KenaScam | ${data.name}`,
     description: data.description,
