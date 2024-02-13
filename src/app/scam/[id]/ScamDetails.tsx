@@ -225,6 +225,10 @@ const CommentSection = ({ comments, loading, scamID, refetch }: CommenSectionPro
       })
       .then(res => {
         console.log('commentRes', res);
+        // clear comment list before refetch
+        setNickname('');
+        setContent('');
+
         refetch();
       })
       .catch(err => console.log(err));
@@ -237,8 +241,8 @@ const CommentSection = ({ comments, loading, scamID, refetch }: CommenSectionPro
           <CardTitle>Comments</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <Input placeholder="Nickname" onChange={e => setNickname(e.target.value)} />
-          <Textarea placeholder="Comment something" onChange={e => setContent(e.target.value)} />
+          <Input placeholder="Nickname" onChange={e => setNickname(e.target.value)} value={nickname} />
+          <Textarea placeholder="Comment something" onChange={e => setContent(e.target.value)} value={content} />
           <button className="flex justify-end pr-1 text-end" onClick={() => addComment()}>
             <SendHorizonalIcon className="h-4 w-4 text-white hover:text-gray-500" />
           </button>
@@ -251,7 +255,7 @@ const CommentSection = ({ comments, loading, scamID, refetch }: CommenSectionPro
           {comments.map(comment => (
             <div className="flex flex-row gap-2" key={comment.id}>
               <Avatar>
-                <AvatarImage src="https://github.com/farhan-helmy.png" />
+                <AvatarImage src={`https://api.dicebear.com/7.x/thumbs/svg?seed=${comment.nickname}`} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <div className="max-w h-full w-full max-w-80 text-wrap rounded-md bg-gray-700 p-2 text-xs md:max-w-64 lg:max-w-64 xl:max-w-96">
