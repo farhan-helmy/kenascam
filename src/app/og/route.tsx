@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
           flexWrap: 'wrap',
         }}
       >
-        IdeaSpace
+        KenaScam
       </div>
       <div
         style={{
