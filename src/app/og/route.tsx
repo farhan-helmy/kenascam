@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/no-unknown-property */
 import { ImageResponse } from 'next/og';
@@ -20,10 +21,10 @@ export async function GET(req: NextRequest) {
   }
 
   const geistMonoRegular = fetch(
-    new URL('../../public/fonts/GeistMono-Regular.otf', import.meta.url),
+    new URL('../../../public/fonts/GeistMono-Regular.otf', import.meta.url),
   ).then(res => res.arrayBuffer());
   const geistRegular = fetch(
-    new URL('../../public/fonts/Geist-Regular.otf', import.meta.url),
+    new URL('../../../public/fonts/Geist-Regular.otf', import.meta.url),
   ).then(res => res.arrayBuffer());
 
   return new ImageResponse(

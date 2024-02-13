@@ -24,3 +24,13 @@ export const sanitizeObject = (obj: SanitizedObject): SanitizedObject => {
   }
   return sanitizedObj;
 };
+
+
+export const transformFormat = (input: string): string => {
+  if (input.includes('-')) {
+    const words = input.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    return words.join(' ').toUpperCase();
+  } else {
+    return input.toUpperCase();
+  }
+}

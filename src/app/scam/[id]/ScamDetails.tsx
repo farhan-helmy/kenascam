@@ -14,10 +14,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import type { Comments, Scam, Image as ImageType } from '@/service/scam';
 import { commentScam, getScam, voteScam } from '@/service/scam';
-import { transformFormat } from '@/app/browse/page';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { sanitizeObject } from '@/lib/utils';
+import { sanitizeObject, transformFormat } from '@/lib/utils';
 
 
 export const metadata: Metadata = {
@@ -195,7 +194,7 @@ const CommentSection = ({ comments, loading, scamID, refetch }: CommenSectionPro
   const [content, setContent] = useState('');
 
   const commentMutation = useMutation({
-    mutationFn: ({ nicknamemut, contentmut, scamIDmut }: { nicknamemut: string; contentmut: string; scamIDmut: string }) =>
+    mutationFn: ({  }: { nicknamemut: string; contentmut: string; scamIDmut: string }) =>
       commentScam({
         nickname,
         content,

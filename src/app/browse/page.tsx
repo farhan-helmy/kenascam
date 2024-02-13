@@ -15,6 +15,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { DeleteFile } from '@/lib/server/s3';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getScams } from '@/service/scam';
+import { transformFormat } from '@/lib/utils';
 
 type ScamCardProps = {
   name: string;
@@ -25,15 +26,6 @@ type ScamCardProps = {
   tags: string[];
   createdAt: string;
 };
-
-export function transformFormat(input: string): string {
-  if (input.includes('-')) {
-    const words = input.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1));
-    return words.join(' ').toUpperCase();
-  } else {
-    return input.toUpperCase();
-  }
-}
 
 function ScamCard({ name, description, createdAt, tags, fileKey }: ScamCardProps) {
   return (
