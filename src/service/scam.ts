@@ -107,8 +107,7 @@ export const getTags = async (): Promise<Categories[]> => {
 };
 
 export const voteScam = async ({ id, action }: { id: string; action: 'upvote' | 'downvote' }) => {
-
-  console.log('action', action)
+  console.log('action', action);
   const response = await fetch(`${process.env.BACKEND_URL}/scam/${id}?action=${action}`, {
     cache: 'no-store',
     headers: {

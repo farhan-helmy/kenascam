@@ -18,7 +18,6 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { sanitizeObject, transformFormat } from '@/lib/utils';
 
-
 export const metadata: Metadata = {
   description: 'Malaysia number 1 scam directory',
   title: 'KenaScam',
@@ -116,22 +115,26 @@ const Details = ({ scam, refetch }: DetailProps) => {
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>{scam.name}</CardTitle>
         <div className="flex gap-4">
-          <div className="flex flex-col items-center justify-center gap-1 text-white hover:text-green-500">
+          <div className="flex flex-row items-center justify-center gap-1 text-white hover:text-green-500">
             <button
               onClick={() => {
                 vote('upvote');
               }}
+              className="flex flex-row items-center justify-center gap-1"
             >
               <ArrowUp className="h-4 w-4" />
+              <div className="text-xs font-light text-green-500"> {scam.upvotes} Upvotes </div>
             </button>
           </div>
-          <div className="flex flex-col items-center justify-center gap-1 text-white hover:text-red-500">
+          <div className="flex flex-row items-center justify-center gap-1 text-white hover:text-red-500">
             <button
               onClick={() => {
                 vote('downvote');
               }}
+              className="flex flex-row items-center justify-center gap-1"
             >
               <ArrowDown className="h-4 w-4" />
+              <div className="text-xs font-light text-red-500"> {scam.downvotes} Downvotes </div>
             </button>
           </div>
         </div>
@@ -144,7 +147,7 @@ const Details = ({ scam, refetch }: DetailProps) => {
 
         <div>
           <Label>Tags</Label>
-          <div className="grid grid-cols-5 items-center gap-2 pt-2">
+          <div className="flex flex-row flex-wrap items-center gap-2 pt-2">
             {scam.scamToTags.map(tag => (
               <div
                 key={tag.tagId}
@@ -194,7 +197,7 @@ const CommentSection = ({ comments, loading, scamID, refetch }: CommenSectionPro
   const [content, setContent] = useState('');
 
   const commentMutation = useMutation({
-    mutationFn: ({  }: { nicknamemut: string; contentmut: string; scamIDmut: string }) =>
+    mutationFn: ({}: { nicknamemut: string; contentmut: string; scamIDmut: string }) =>
       commentScam({
         nickname,
         content,
@@ -273,7 +276,7 @@ const CommentSection = ({ comments, loading, scamID, refetch }: CommenSectionPro
   );
 };
 
-export default function ScamDetails({ id }: { id: string } ) {
+export default function ScamDetails({ id }: { id: string }) {
   const router = useRouter();
 
   const scam = useQuery({

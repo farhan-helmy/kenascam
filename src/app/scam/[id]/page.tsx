@@ -11,16 +11,16 @@ function transformFormat(input: string): string {
   }
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { id: string };
-}): Promise<Metadata | undefined> {
-
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata | undefined> {
   const data = await getScam(params.id);
+
+  const imageUrl =
+    data.images.length !== 0
+      ? `https://d8f7wymmosp6f.cloudfront.net/${data.images[0].url}`
+      : 'https://d8f7wymmosp6f.cloudfront.net/kenascamcover.png';
   const tags = data.scamToTags.map(tag => transformFormat(tag.tagId));
   const joinedTags = tags.join(',');
-  const ogImage = `https://staging.kenascam.xyz/og?title=${data.name}&description=${data.description}&authorName=anonymous&authorImage=https://d8f7wymmosp6f.cloudfront.net/${data.images[0].url}&tags=${joinedTags}`;
+  const ogImage = `https://staging.kenascam.xyz/og?title=${data.name}&description=${data.description}&authorName=anonymous&authorImage=${imageUrl}&tags=${joinedTags}`;
   return {
     title: `KenaScam | ${data.name}`,
     description: data.description,

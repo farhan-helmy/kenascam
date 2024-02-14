@@ -42,7 +42,7 @@ function ScamCard({ name, description, createdAt, tags, fileKey }: ScamCardProps
             />
           </div>
           <CardTitle className="max-w-24 truncate pt-4 hover:text-clip">{name}</CardTitle>
-          <CardDescription>{description}</CardDescription>
+          <CardDescription className="max-w-96 truncate pt-4 hover:text-clip">{description}</CardDescription>
         </div>
       </CardHeader>
       <CardContent>
