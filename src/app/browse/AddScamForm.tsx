@@ -57,6 +57,8 @@ const OPTIONS = [
   { label: 'Mule Account', value: 'mule-account' },
   { label: 'Casino', value: 'casino' },
   { label: 'Gamble', value: 'gamble' },
+  { label: 'Bitcoin', value: 'bitcoin' },
+  { label: 'Congratulations', value: 'congratulations' },
   { label: 'Advance Fee', value: 'advance-fee' },
   { label: 'Smartphone', value: 'smartphone' },
   { label: 'False  Tech Support', value: 'false-tech-support' },
