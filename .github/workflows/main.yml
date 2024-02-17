@@ -36,4 +36,4 @@ jobs:
       - name: Install dependencies
         run: bun install
       - name: Deploy to staging
-        run: NODE_ENV=development bun sst deploy --stage=staging
+        run: APP_ENV=development bun sst deploy --stage=staging

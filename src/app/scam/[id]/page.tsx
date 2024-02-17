@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   const tags = data.scamToTags.map(tag => transformFormat(tag.tagId));
   const joinedTags = tags.join(',');
   console.log(process.env.NODE_ENV)
-  const ogImage = `https://${process.env.NODE_ENV === 'development' ? 'staging.' : ''}kenascam.xyz/og?title=${data.name}&description=${data.description}&authorName=anonymous&authorImage=${imageUrl}&tags=${joinedTags}`;
+  const ogImage = `https://${process.env.APP_ENV === 'development' ? 'staging.' : ''}kenascam.xyz/og?title=${data.name}&description=${data.description}&authorName=anonymous&authorImage=${imageUrl}&tags=${joinedTags}`;
   return {
     title: `KenaScam | ${data.name}`,
     description: data.description,
