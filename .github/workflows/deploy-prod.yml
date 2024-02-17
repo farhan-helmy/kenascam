@@ -3,6 +3,13 @@ name: Deploy to prod
 on:
   workflow_dispatch:
 
+env:
+  AWS_S3_BUCKET_NAME: kenascam-image
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  BACKEND_URL: https://kenascam-api.fly.dev
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
 permissions:
   id-token: write # This is required for requesting the JWT
   contents: read # This is required for actions/checkout
@@ -26,5 +33,5 @@ jobs:
           bun-version: latest
       - name: Install dependencies
         run: bun install
-      - name: Deploy to staging
+      - name: Deploy to Production
         run: bun sst deploy --stage=prod
