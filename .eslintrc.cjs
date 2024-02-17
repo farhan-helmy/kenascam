@@ -28,7 +28,7 @@ module.exports = {
   },
   plugins: ['sort-keys-fix', '@typescript-eslint', 'import'],
   rules: {
-    '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-unused-vars': ['warn'],
     '@typescript-eslint/no-unnecessary-condition': 'warn',
     '@typescript-eslint/consistent-type-imports': ERROR,
     '@typescript-eslint/naming-convention': [

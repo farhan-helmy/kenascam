@@ -1,12 +1,13 @@
 'use client';
 
-import { DiscordLogoIcon, GitHubLogoIcon, PlusCircledIcon } from '@radix-ui/react-icons';
+import { GitHubLogoIcon, PlusCircledIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { Heart } from 'lucide-react';
 import { bungee } from '../fonts';
 import AddScamForm from './AddScamForm';
 import ScamCardSkeleton from './skeleton';
@@ -16,7 +17,6 @@ import { DeleteFile } from '@/lib/server/s3';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getScams } from '@/service/scam';
 import { transformFormat } from '@/lib/utils';
-import { Heart } from 'lucide-react';
 
 type ScamCardProps = {
   name: string;
