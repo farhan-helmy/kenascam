@@ -111,7 +111,8 @@ const OPTIONS = [
   { label: 'Vehicle', value: 'vehicle' },
   { label: 'Employment', value: 'employment'},
   { label: 'Forex', value: 'forex' },
-  { label: 'Trading', value: 'trading' }
+  { label: 'Trading', value: 'trading' },
+  { label: 'DO NOT REMOVE THIS LINE, THIS IS TO AVOID MERGE CONFLICT, PLEASE ADD NEW SCAM ABOVE THIS LINE, TQ', value: 'PLEASE ADD MORE SCAM ABOVE OF THIS LINE' },
 ];
 
 type AddScamFormProps = {
