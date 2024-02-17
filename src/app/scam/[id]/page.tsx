@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
       : 'https://d8f7wymmosp6f.cloudfront.net/kenascamcover.png';
   const tags = data.scamToTags.map(tag => transformFormat(tag.tagId));
   const joinedTags = tags.join(',');
-  console.log(process.env.NODE_ENV)
+  console.log(process.env.APP_ENV)
   const ogImage = `https://${process.env.APP_ENV === 'development' ? 'staging.' : ''}kenascam.xyz/og?title=${data.name}&description=${data.description}&authorName=anonymous&authorImage=${imageUrl}&tags=${joinedTags}`;
   return {
     title: `KenaScam | ${data.name}`,
