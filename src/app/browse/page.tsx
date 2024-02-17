@@ -16,6 +16,7 @@ import { DeleteFile } from '@/lib/server/s3';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getScams } from '@/service/scam';
 import { transformFormat } from '@/lib/utils';
+import { Heart } from 'lucide-react';
 
 type ScamCardProps = {
   name: string;
@@ -104,7 +105,14 @@ export default function Browse() {
           <Link href="https://github.com/farhan-helmy/kenascam">
             <GitHubLogoIcon className="mr-4 h-6 w-6" />
           </Link>
-          <DiscordLogoIcon className="h-6 w-6" />
+          <Link href="https://github.com/sponsors/farhan-helmy">
+            <div className='flex flex-row gap-2 border-2 rounded-md p-1 items-center justify-center'>
+              <Heart className="h-4 w-4 text-red-400" />
+              <div className='text-sm'>
+                Sponsor
+              </div>
+            </div>
+          </Link>
         </div>
         <div className="max-h-screen">
           <Dialog onOpenChange={() => cleanUpImages()}>
@@ -124,21 +132,21 @@ export default function Browse() {
         <div className="grid gap-4 md:grid-cols-3">
           {scams.isLoading
             ? skeletonCards.map((_, index) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <ScamCardSkeleton key={index} />
-              ))
+              // eslint-disable-next-line react/no-array-index-key
+              <ScamCardSkeleton key={index} />
+            ))
             : scams.data?.map(scam => (
-                <Link key={scam.id} href={`/scam/${scam.id}`} scroll>
-                  <ScamCard
-                    key={scam.id}
-                    name={scam.name}
-                    description={scam.description}
-                    createdAt={dayjs(scam.createdAt).fromNow()}
-                    tags={scam.scamToTags.map(tag => tag.tagId)}
-                    fileKey={scam.images.map(image => image.url)}
-                  />
-                </Link>
-              ))}
+              <Link key={scam.id} href={`/scam/${scam.id}`} scroll>
+                <ScamCard
+                  key={scam.id}
+                  name={scam.name}
+                  description={scam.description}
+                  createdAt={dayjs(scam.createdAt).fromNow()}
+                  tags={scam.scamToTags.map(tag => tag.tagId)}
+                  fileKey={scam.images.map(image => image.url)}
+                />
+              </Link>
+            ))}
         </div>
       </div>
     </>
