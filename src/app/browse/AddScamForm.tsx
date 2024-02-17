@@ -108,7 +108,8 @@ const OPTIONS = [
   { label: 'Quid Pro Quo', value: 'quid-pro-quo' },
   { label: 'Charity', value: 'charity' },
   { label: 'Gold', value: 'gold' },
-  { label: 'Vehicle', value: 'vehicle' }
+  { label: 'Vehicle', value: 'vehicle' },
+  { label: 'Employment', value: 'employment'}
 ];
 
 type AddScamFormProps = {
