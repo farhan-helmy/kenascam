@@ -1,4 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+KenaScam is a open-source web application that allows users to report and view scams. It is built using Next.js The application is hosted on Vercel, a cloud platform for static sites and Serverless Functions.
+
+This is the frontend of the application. The backend can be found here : [KenaScam Backend](https://github.com/farhan-helmy/kenascam-api)
+
+## Features
+
+- Report a scam
+- View reported scams
+- View details of a scam
+
+## What we need right now
+
+- [ ] Types of scams
+
+## How to contribute
+
+- Fork the repository
+- Clone the repository to your local machine
+- Create a new branch for your changes
+- Make your changes and commit them
+- Push your changes to your fork of the repository
+- Create a pull request to the main repository
+- ??? 
+- Profit 
 
 ## Getting Started
 
