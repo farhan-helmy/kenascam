@@ -109,7 +109,8 @@ const OPTIONS = [
   { label: 'Charity', value: 'charity' },
   { label: 'Gold', value: 'gold' },
   { label: 'Vehicle', value: 'vehicle' },
-  { label: 'Employment', value: 'employment'}
+  { label: 'Employment', value: 'employment'},
+  { label: 'DO NOT REMOVE THIS LINE, THIS IS TO AVOID MERGE CONFLICT, PLEASE ADD NEW SCAM ABOVE THIS LINE, TQ', value: 'PLEASE ADD MORE SCAM ABOVE OF THIS LINE' },
 ];
 
 type AddScamFormProps = {
