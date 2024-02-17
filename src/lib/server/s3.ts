@@ -3,12 +3,13 @@
 
 import { revalidatePath } from 'next/cache';
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { createId } from '@paralleldrive/cuid2';
 
 const s3Client = new S3Client({
   region: 'ap-southeast-1',
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID_FARHAN as string,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_FARHAN as string,
   },
 });
 
@@ -25,28 +26,17 @@ async function uploadFileToS3(file: Buffer, fileName: string) {
 
   const resizedFile = fileBuffer;
 
-  // let resizedFile = fileBuffer;
-  // if (fileSizeInMB > 0.2) {
-  //   // Resize image if file size is greater than 200KB
-  //   resizedFile = await sharp(fileBuffer)
-  //     .resize(1000, 1000, {
-  //       fit: "inside",
-  //       withoutEnlargement: true,
-  //     })
-  //     .withMetadata()
-  //     .toFormat("webp", { quality: 80 })
-  //     .toBuffer();
-  // }
-
-  // const resizedFileSizeInBytes = resizedFile.byteLength;
-  // const resizedFileSizeInMB = resizedFileSizeInBytes / (1024 * 1024);
-  // console.log("resizedFileSizeInMB: ", resizedFileSizeInMB);
+  // get file ext from filename
+  const fileExt = fileName.split('.').pop();
+  if (!fileExt) {
+    throw new Error('Invalid file');
+  }
 
   const params = {
     Body: resizedFile,
     Bucket: process.env.AWS_S3_BUCKET_NAME as string,
     ContentType: '*/*',
-    Key: `${Date.now()}-${fileName}`,
+    Key: `${createId()}.${fileExt}`,
   };
 
   console.log(process.env.AWS_S3_BUCKET_NAME as string);
@@ -99,7 +89,7 @@ export async function DeleteFile(key: string) {
     const command = new DeleteObjectCommand(params);
     const res = await s3Client.send(command);
 
-    console.log(res)
+    console.log(res);
     return {
       success: true,
     };
