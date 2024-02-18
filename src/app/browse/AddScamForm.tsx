@@ -51,7 +51,7 @@ const OPTIONS = [
   { label: 'Royalty', value: 'royalty' },
   { label: 'Porn', value: 'porn' },
   { label: 'Parcel Delivery', value: 'parcel-delivery' },
-  { label: 'Renovation', value: 'renovation' }
+  { label: 'Renovation', value: 'renovation' },
   { label: 'Spam', value: 'spam' },
   { label: 'Deepfake', value: 'deepfake' },
   { label: 'Pharming', value: 'pharming' },
