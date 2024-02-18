@@ -1,12 +1,13 @@
 'use client';
 
-import { DiscordLogoIcon, GitHubLogoIcon, PlusCircledIcon } from '@radix-ui/react-icons';
+import { GitHubLogoIcon, PlusCircledIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { Heart } from 'lucide-react';
 import { bungee } from '../fonts';
 import AddScamForm from './AddScamForm';
 import ScamCardSkeleton from './skeleton';
@@ -42,7 +43,7 @@ function ScamCard({ name, description, createdAt, tags, fileKey }: ScamCardProps
             />
           </div>
           <CardTitle className="max-w-24 truncate pt-4 hover:text-clip">{name}</CardTitle>
-          <CardDescription>{description}</CardDescription>
+          <CardDescription className="xl:max-w-64 md:max-w-24 sm:max-w-24 max-w-96 truncate pt-4 hover:text-clip">{description}</CardDescription>
         </div>
       </CardHeader>
       <CardContent>
@@ -104,7 +105,14 @@ export default function Browse() {
           <Link href="https://github.com/farhan-helmy/kenascam">
             <GitHubLogoIcon className="mr-4 h-6 w-6" />
           </Link>
-          <DiscordLogoIcon className="h-6 w-6" />
+          <Link href="https://github.com/sponsors/farhan-helmy">
+            <div className='flex flex-row gap-2 border-2 rounded-md p-1 items-center justify-center'>
+              <Heart className="h-4 w-4 text-red-400" />
+              <div className='text-sm'>
+                Sponsor
+              </div>
+            </div>
+          </Link>
         </div>
         <div className="max-h-screen">
           <Dialog onOpenChange={() => cleanUpImages()}>
@@ -124,21 +132,21 @@ export default function Browse() {
         <div className="grid gap-4 md:grid-cols-3">
           {scams.isLoading
             ? skeletonCards.map((_, index) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <ScamCardSkeleton key={index} />
-              ))
+              // eslint-disable-next-line react/no-array-index-key
+              <ScamCardSkeleton key={index} />
+            ))
             : scams.data?.map(scam => (
-                <Link key={scam.id} href={`/scam/${scam.id}`} scroll>
-                  <ScamCard
-                    key={scam.id}
-                    name={scam.name}
-                    description={scam.description}
-                    createdAt={dayjs(scam.createdAt).fromNow()}
-                    tags={scam.scamToTags.map(tag => tag.tagId)}
-                    fileKey={scam.images.map(image => image.url)}
-                  />
-                </Link>
-              ))}
+              <Link key={scam.id} href={`/scam/${scam.id}`} scroll>
+                <ScamCard
+                  key={scam.id}
+                  name={scam.name}
+                  description={scam.description}
+                  createdAt={dayjs(scam.createdAt).fromNow()}
+                  tags={scam.scamToTags.map(tag => tag.tagId)}
+                  fileKey={scam.images.map(image => image.url)}
+                />
+              </Link>
+            ))}
         </div>
       </div>
     </>
