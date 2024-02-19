@@ -84,7 +84,7 @@ export async function DeleteFile(key: string) {
     };
 
     const command = new DeleteObjectCommand(params);
-    const res = await s3Client.send(command);
+    await s3Client.send(command);
 
     return {
       success: true,

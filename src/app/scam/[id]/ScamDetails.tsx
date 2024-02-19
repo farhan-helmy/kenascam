@@ -10,7 +10,6 @@ import { useEffect, useState } from 'react';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import Link from 'next/link';
-import { unstable_noStore as noStore } from 'next/cache';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -91,10 +90,9 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
 type DetailProps = {
   scam: Scam;
   refetch: () => void;
-  adminSecret: string;
 };
 
-const Details = ({ scam, refetch, adminSecret }: DetailProps) => {
+const Details = ({ scam, refetch }: DetailProps) => {
   dayjs.extend(relativeTime);
 
   const voteMutation = useMutation({
@@ -292,7 +290,6 @@ const CommentSection = ({ comments, loading, scamID, refetch }: CommenSectionPro
 };
 
 export default function ScamDetails({ id, adminSecret }: { id: string; adminSecret: string }) {
-  noStore();
   const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
 
@@ -304,9 +301,11 @@ export default function ScamDetails({ id, adminSecret }: { id: string; adminSecr
     }
   }, [adminSecret]);
 
-  const deleteScamMutation = useMutation({
-    mutationFn: (scamId: string) => deleteScam({ id: scamId, adminSecret }),
-  });
+  const removeScam = async () => {
+    deleteScam({ id, adminSecret }).then(() => {
+      router.push('/');
+    });
+  };
 
   const scam = useQuery({
     queryKey: ['scam', id],
@@ -327,17 +326,11 @@ export default function ScamDetails({ id, adminSecret }: { id: string; adminSecr
       </div>
       <div className="flex flex-col p-4">
         <div className="w-full rounded-md">
-          <Details scam={scam.data as Scam} refetch={scam.refetch} adminSecret={adminSecret} />
+          <Details scam={scam.data as Scam} refetch={scam.refetch} />
         </div>
         {isAdmin ? (
           <div className="flex items-center justify-center pt-2">
-            <button
-              onClick={() =>
-                deleteScam({ id, adminSecret }).then(res => {
-                  console.log('deleteRes', res);
-                })
-              }
-            >
+            <button type='button' onClick={() => removeScam()} className="cursor-pointer">
               <Trash2Icon className="text-red-500" />
             </button>
           </div>
