@@ -88,6 +88,10 @@ const OPTIONS: Option[] = [
   { label: 'Fake Degrees', value: 'fake-degrees' },
   { label: 'Online Extortion', value: 'online-extortion' },
   { label: 'Quid Pro Quo', value: 'quid-pro-quo' },
+  { label: 'Ecommerce', value: 'ecommerce' },
+  { label: 'Government Aid', value: 'government-aid' },
+  { label: 'Digital Payment Scams', value: 'digital-payment-scams' },
+  // add comma on the last line to prevent merge conflict
 ];
 
 type AddScamFormProps = {
