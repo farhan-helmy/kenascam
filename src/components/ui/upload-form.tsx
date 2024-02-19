@@ -1,19 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 'use client';
 
-import type { ChangeEvent, DragEventHandler } from 'react';
+import type { ChangeEvent, DragEventHandler, FormEvent } from 'react';
 import { useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { UploadIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
-import { XIcon } from 'lucide-react';
-import { toast } from 'sonner'
+import { toast } from 'sonner';
 import { DeleteFile, UploadFile } from '@/lib/server/s3';
 import { Button } from '@/components/ui/button';
 
 type UploadFormProps = {
-  fileKey: string[]
-  setFileKey: (key: string[]) => void
+  fileKey: string[];
+  setFileKey: (key: string[]) => void;
 };
 
 const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
@@ -74,21 +73,23 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
     }
   };
 
-  const deleteImage = async (fileName: string) => {
-    const res = await DeleteFile(fileName);
-
-    if (!res.success) {
-      toast('Error', {
-        description: 'Something went wrong',
-      });
-      return;
+  const deleteAllImages = async (e: FormEvent) => {
+    e.preventDefault();
+    for (const key of fileKey) {
+      const res = await DeleteFile(key);
+      if (!res.success) {
+        toast('Error', {
+          description: 'Something went wrong',
+        });
+        return;
+      }
     }
 
-    toast('Image deleted!');
+    toast('All image deleted!');
 
-    setImages(images.filter(image => image.fileName !== fileName));
-    setFileKey(fileKey.filter(key => key !== fileName));
-  }
+    setImages([]);
+    setFileKey([]);
+  };
 
   // triggers the input when the button is clicked
   const onButtonClick = () => {
@@ -99,65 +100,65 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
 
   return (
     <>
-      <div
-        className="flex w-full items-center justify-center pt-2"
-        id="form-file-upload"
-        onDragEnter={handleDrag}
-        onSubmit={e => e.preventDefault()}
-      >
-        <input
-          accept="image/*,application/pdf"
-          className="hidden"
-          id="input-file-upload"
-          multiple={true}
-          onChange={handleChange}
-          ref={inputRef}
-          type="file"
-        />
-        <label
-          className="flex h-full w-1/2 items-center justify-center"
-          htmlFor="input-file-upload"
-          id="label-file-upload"
-        >
-          <div className="shadow-default-md flex h-fit w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-solid border-black bg-white py-10 hover:bg-gray-200">
-            <span className="text-5xl text-purple-900">
-              <UploadIcon />
-            </span>
-            <Button
-              className="bg-black text-white hover:bg-gray-400 active:bg-black disabled:bg-cyan-900"
-              disabled={uploadFileMutation.isPending}
-              onClick={onButtonClick}
-              type="button"
-            >
-              {uploadFileMutation.isPending ? 'Uploading...' : 'Browse My files'}
-            </Button>
-            <p className="mt-2 text-xs text-slate-900">Supported files: jpg, png, pdf</p>
-          </div>
-        </label>
-
-        {dragActive && (
-          <div id="drag-file-element" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} />
-        )}
-      </div>
-      {images.length > 0 && (
+      {images.length > 0 ? (
         <div className="flex flex-col items-center gap-2 pt-4">
-          <div className="text-xs">Images</div>
+          <Button variant="secondary" onClick={e => deleteAllImages(e)}>
+            Clear all images
+          </Button>
           <div className="flex flex-row gap-2">
             {images.map(image => (
-              <div className="relative" key={image.fileName}>
+              <div className="h-full" key={image.fileName}>
                 <Image
                   alt={image.fileName}
                   className="rounded-md border border-red-400"
-                  height={120}
+                  height={150}
                   src={image.url}
-                  width={80}
+                  width={200}
                 />
-                <XIcon
-                  className="absolute right-0 top-0 h-4 w-4 cursor-pointer text-white hover:text-red-600"
-                  onClick={() => deleteImage(image.fileName)} />
               </div>
             ))}
           </div>
+        </div>
+      ) : (
+        <div
+          className="flex w-full items-center justify-center pt-2"
+          id="form-file-upload"
+          onDragEnter={handleDrag}
+          onSubmit={e => e.preventDefault()}
+        >
+          <input
+            accept="image/*,application/pdf"
+            className="hidden"
+            id="input-file-upload"
+            multiple={true}
+            onChange={handleChange}
+            ref={inputRef}
+            type="file"
+          />
+          <label
+            className="flex h-full w-1/2 items-center justify-center"
+            htmlFor="input-file-upload"
+            id="label-file-upload"
+          >
+            <div className="shadow-default-md flex h-fit w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-solid border-black bg-white py-10 hover:bg-gray-200">
+              <span className="text-5xl text-purple-900">
+                <UploadIcon />
+              </span>
+              <Button
+                className="bg-black text-white hover:bg-gray-400 active:bg-black disabled:bg-cyan-900"
+                disabled={uploadFileMutation.isPending}
+                onClick={onButtonClick}
+                type="button"
+              >
+                {uploadFileMutation.isPending ? 'Uploading...' : 'Browse My files'}
+              </Button>
+              <p className="mt-2 text-xs text-slate-900">Supported files: jpg, png, pdf</p>
+            </div>
+          </label>
+
+          {dragActive && (
+            <div id="drag-file-element" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} />
+          )}
         </div>
       )}
     </>
