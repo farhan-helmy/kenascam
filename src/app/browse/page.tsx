@@ -99,7 +99,7 @@ export default function Browse() {
   };
   return (
     <>
-      <div className="sticky top-0 flex w-full justify-between p-4">
+      <div className="flex w-full justify-between p-4">
         <div className="flex flex-row items-center justify-center">
           <button className={`pr-4 md:text-2xl ${bungee.className}`}>Kena Scam</button>
           <Link href="https://github.com/farhan-helmy/kenascam">
