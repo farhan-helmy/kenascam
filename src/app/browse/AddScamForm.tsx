@@ -15,6 +15,7 @@ import MultipleSelector from '@/components/ui/multiple-selector';
 import { createScam, getCategories } from '@/service/scam';
 
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const OPTIONS: Option[] = [
   { label: 'Phishing', value: 'phishing' },
   { label: 'Social Media', value: 'social-media' },
@@ -41,10 +42,13 @@ const OPTIONS: Option[] = [
   { label: 'Mule Account', value: 'mule-account' },
   { label: 'Casino', value: 'casino' },
   { label: 'Gamble', value: 'gamble' },
+  { label: 'Advance Fee', value: 'advance-fee' }
   { label: 'Smartphone', value: 'smartphone' }, 
   { label: 'False  Tech Support', value :'false-tech-support'}, 
   { label: 'Property Rental', value :'property-rental'},
   { label: 'Smartphone', value: 'smartphone' },
+  { label: 'Local Authorities', value: 'local-authorities' },
+  { label: 'Parcel', value: 'parcel' },
   { label: 'Charity Fraud', value: 'charity-fraud' },
   { label: 'Lottery', value: 'lottery' },
   { label: 'Tech Support', value: 'tech-support' },
@@ -83,7 +87,6 @@ const OPTIONS: Option[] = [
   { label: 'Home Repair', value: 'home-repair' },
   { label: 'Pet', value: 'pet' },
   { label: 'Elderly Exploitation', value: 'elderly-exploitation' },
-  { label: 'Online Auctions', value: 'online-auctions' },
   { label: 'Home Rentals', value: 'home-rentals' },
   { label: 'Fake Degrees', value: 'fake-degrees' },
   { label: 'Online Extortion', value: 'online-extortion' },
@@ -91,6 +94,7 @@ const OPTIONS: Option[] = [
   { label: 'Ecommerce', value: 'ecommerce' },
   { label: 'Government Aid', value: 'government-aid' },
   { label: 'Digital Payment Scams', value: 'digital-payment-scams' },
+  { label: 'Charity', value: 'charity' },
   // add comma on the last line to prevent merge conflict
 ];
 
