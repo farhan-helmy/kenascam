@@ -19,7 +19,6 @@ async function uploadFileToS3(file: Buffer, fileName: string) {
   // Check file size
   const fileSizeInBytes = fileBuffer.byteLength;
   const fileSizeInMB = fileSizeInBytes / (1024 * 1024);
-  console.log('fileSizeInMB: ', fileSizeInMB);
   if (fileSizeInMB > 2) {
     throw new Error('File size is too large');
   }
@@ -38,8 +37,6 @@ async function uploadFileToS3(file: Buffer, fileName: string) {
     ContentType: '*/*',
     Key: `${createId()}.${fileExt}`,
   };
-
-  console.log(process.env.AWS_S3_BUCKET_NAME as string);
 
   const command = new PutObjectCommand(params);
 
@@ -89,7 +86,6 @@ export async function DeleteFile(key: string) {
     const command = new DeleteObjectCommand(params);
     const res = await s3Client.send(command);
 
-    console.log(res);
     return {
       success: true,
     };

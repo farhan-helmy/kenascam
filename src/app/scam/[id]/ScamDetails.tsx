@@ -2,20 +2,21 @@
 
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ArrowDown, ArrowUp, SendHorizonalIcon, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, SendHorizonalIcon, Trash2Icon, X } from 'lucide-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import Link from 'next/link';
+import { unstable_noStore as noStore } from 'next/cache';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import type { Comments, Scam, Image as ImageType } from '@/service/scam';
-import { commentScam, getScam, voteScam } from '@/service/scam';
+import { commentScam, deleteScam, getScam, voteScam } from '@/service/scam';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { sanitizeObject, transformFormat } from '@/lib/utils';
@@ -90,9 +91,10 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
 type DetailProps = {
   scam: Scam;
   refetch: () => void;
+  adminSecret: string;
 };
 
-const Details = ({ scam, refetch }: DetailProps) => {
+const Details = ({ scam, refetch, adminSecret }: DetailProps) => {
   dayjs.extend(relativeTime);
 
   const voteMutation = useMutation({
@@ -289,8 +291,22 @@ const CommentSection = ({ comments, loading, scamID, refetch }: CommenSectionPro
   );
 };
 
-export default function ScamDetails({ id }: { id: string }) {
+export default function ScamDetails({ id, adminSecret }: { id: string; adminSecret: string }) {
+  noStore();
+  const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const regex = new RegExp('(^| )kenascam_admin_secret=([^;]+)');
+    const kenascamAdminSecret = document.cookie.match(regex);
+    if (kenascamAdminSecret?.[2] === adminSecret) {
+      setIsAdmin(true);
+    }
+  }, [adminSecret]);
+
+  const deleteScamMutation = useMutation({
+    mutationFn: (scamId: string) => deleteScam({ id: scamId, adminSecret }),
+  });
 
   const scam = useQuery({
     queryKey: ['scam', id],
@@ -311,8 +327,21 @@ export default function ScamDetails({ id }: { id: string }) {
       </div>
       <div className="flex flex-col p-4">
         <div className="w-full rounded-md">
-          <Details scam={scam.data as Scam} refetch={scam.refetch} />
+          <Details scam={scam.data as Scam} refetch={scam.refetch} adminSecret={adminSecret} />
         </div>
+        {isAdmin ? (
+          <div className="flex items-center justify-center pt-2">
+            <button
+              onClick={() =>
+                deleteScam({ id, adminSecret }).then(res => {
+                  console.log('deleteRes', res);
+                })
+              }
+            >
+              <Trash2Icon className="text-red-500" />
+            </button>
+          </div>
+        ) : null}
         <div className="pt-4">
           <CommentSection comments={scam.data?.comments as Comments[]} scamID={id} refetch={scam.refetch} />
         </div>

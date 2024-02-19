@@ -51,7 +51,7 @@ const UploadForm = ({ fileKey, setFileKey }: UploadFormProps) => {
 
       // Iterate through each file and append it to the FormData
       for (const element of e.target.files) {
-        console.log(element);
+   
         formData.append('file', element);
       }
 

@@ -87,6 +87,21 @@ export const createScam = async (data: CreateScamSchema) => {
   return await response.json();
 };
 
+export async function deleteScam({ id, adminSecret }: { id: string, adminSecret: string }) {
+  const response = await fetch(`${process.env.BACKEND_URL}/scam/${id}`, {
+    cache: 'no-store',
+    headers: {
+      KENASCAM_ADMIN_SECRET: adminSecret,
+      'Content-Type': 'application/json',
+    },
+    method: 'DELETE',
+  });
+
+  console.log('deleteresponse', response)
+
+  return await response.json();
+}
+
 export const getTags = async (): Promise<Categories[]> => {
   const response = await fetch(`${process.env.BACKEND_URL}/tag`, {
     cache: 'no-store',
@@ -107,7 +122,7 @@ export const getTags = async (): Promise<Categories[]> => {
 };
 
 export const voteScam = async ({ id, action }: { id: string; action: 'upvote' | 'downvote' }) => {
-  console.log('action', action);
+
   const response = await fetch(`${process.env.BACKEND_URL}/scam/${id}?action=${action}`, {
     cache: 'no-store',
     headers: {
