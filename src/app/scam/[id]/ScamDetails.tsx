@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ArrowDown, ArrowUp, SendHorizonalIcon, Share, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, SendHorizonalIcon, X } from 'lucide-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
