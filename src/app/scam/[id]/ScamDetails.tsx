@@ -2,12 +2,14 @@
 
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ArrowDown, ArrowUp, SendHorizonalIcon, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, SendHorizonalIcon, Share, X } from 'lucide-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useState } from 'react';
 import type { Metadata } from 'next';
+import Script from 'next/script';
+import Link from 'next/link';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -111,75 +113,86 @@ const Details = ({ scam, refetch }: DetailProps) => {
   };
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>{scam.name}</CardTitle>
-        <div className="flex gap-4">
-          <div className="flex flex-row items-center justify-center gap-1 text-white hover:text-green-500">
-            <button
-              onClick={() => {
-                vote('upvote');
-              }}
-              className="flex flex-row items-center justify-center gap-1"
-            >
-              <ArrowUp className="h-4 w-4" />
-              <div className="text-xs font-light text-green-500"> {scam.upvotes} Upvotes </div>
-            </button>
-          </div>
-          <div className="flex flex-row items-center justify-center gap-1 text-white hover:text-red-500">
-            <button
-              onClick={() => {
-                vote('downvote');
-              }}
-              className="flex flex-row items-center justify-center gap-1"
-            >
-              <ArrowDown className="h-4 w-4" />
-              <div className="text-xs font-light text-red-500"> {scam.downvotes} Downvotes </div>
-            </button>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        <div>
-          <Label>Desription</Label>
-          <div className="max-w-80 break-words pt-2 text-sm text-gray-200">{scam.description}</div>
-        </div>
-
-        <div>
-          <Label>Tags</Label>
-          <div className="flex flex-row flex-wrap items-center gap-2 pt-2">
-            {scam.scamToTags.map(tag => (
-              <div
-                key={tag.tagId}
-                className="focus:ring-ring max-width-32 items-start justify-start truncate rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors hover:text-clip focus:outline-none focus:ring-2 focus:ring-offset-2"
+    <>
+      <Script async src="https://platform.twitter.com/widgets.js"></Script>
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle>{scam.name}</CardTitle>
+          <div className="flex gap-4">
+            <div className="flex flex-row items-center justify-center gap-1 text-white hover:text-green-500">
+              <button
+                onClick={() => {
+                  vote('upvote');
+                }}
+                className="flex flex-row items-center justify-center gap-1"
               >
-                {transformFormat(tag.tagId)}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {scam.platform ? (
-          <div>
-            <Label>Scammer Info</Label>
-            <div className="pt-2 text-sm">
-              This scam is on <span className="uppercase underline">{scam.platform}</span>{' '}
-              {platformWriting(scam.platform)} <span className="text-gray-400">{scam.scammerInfo}</span>
+                <ArrowUp className="h-4 w-4" />
+                <div className="text-xs font-light text-green-500"> {scam.upvotes} Upvotes </div>
+              </button>
+            </div>
+            <div className="flex flex-row items-center justify-center gap-1 text-white hover:text-red-500">
+              <button
+                onClick={() => {
+                  vote('downvote');
+                }}
+                className="flex flex-row items-center justify-center gap-1"
+              >
+                <ArrowDown className="h-4 w-4" />
+                <div className="text-xs font-light text-red-500"> {scam.downvotes} Downvotes </div>
+              </button>
             </div>
           </div>
-        ) : null}
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <div>
+            <Label>Desription</Label>
+            <div className="max-w-80 break-words pt-2 text-sm text-gray-200">{scam.description}</div>
+          </div>
 
-        <div className="pt-4 text-xs text-gray-400">
-          {scam.upvotes} Upvote {scam.downvotes} Downvote
-        </div>
-      </CardContent>
-      <CardFooter className="text-xs text-gray-300">
-        <p>
-          {' '}
-          Uploaded by <span className="text-gray-400">Anon</span> {time}
-        </p>
-      </CardFooter>
-    </Card>
+          <div>
+            <Label>Tags</Label>
+            <div className="flex flex-row flex-wrap items-center gap-2 pt-2">
+              {scam.scamToTags.map(tag => (
+                <div
+                  key={tag.tagId}
+                  className="max-width-32 items-start justify-start truncate rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors hover:text-clip focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                >
+                  {transformFormat(tag.tagId)}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {scam.platform ? (
+            <div>
+              <Label>Scammer Info</Label>
+              <div className="pt-2 text-sm">
+                This scam is on <span className="uppercase underline">{scam.platform}</span>{' '}
+                {platformWriting(scam.platform)} <span className="text-gray-400">{scam.scammerInfo}</span>
+              </div>
+            </div>
+          ) : null}
+        </CardContent>
+        <CardFooter>
+          <div className="flex flex-col">
+            <div className="text-xs text-gray-300">
+              {' '}
+              Uploaded by <span className="text-gray-400">Anon</span> {time}
+            </div>
+            <div className="pt-4">
+              <Link
+                href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+                className="twitter-share-button"
+                data-show-count="false"
+              >
+                X
+              </Link>
+              <script></script>
+            </div>
+          </div>
+        </CardFooter>
+      </Card>
+    </>
   );
 };
 
