@@ -61,9 +61,9 @@ const OPTIONS = [
   { label: 'Gamble', value: 'gamble' },
   { label: 'Online Auction', value: 'online-action' },
   { label: 'Advance Fee', value: 'advance-fee' },
-  { label: 'Smartphone', value: 'smartphone' }, 
-  { label: 'False  Tech Support', value :'false-tech-support'}, 
-  { label: 'Property Rental', value :'property-rental'},
+  { label: 'Smartphone', value: 'smartphone' },
+  { label: 'False  Tech Support', value: 'false-tech-support' },
+  { label: 'Property Rental', value: 'property-rental' },
   { label: 'Smartphone', value: 'smartphone' },
   { label: 'Local Authorities', value: 'local-authorities' },
   { label: 'Parcel', value: 'parcel' },
@@ -114,10 +114,13 @@ const OPTIONS = [
   { label: 'Carousell', value: 'carousell'},
   { label: 'Lazada', value: 'lazada'},
   { label: 'Vehicle', value: 'vehicle' },
-  { label: 'Employment', value: 'employment'},
+  { label: 'Employment', value: 'employment' },
   { label: 'Forex', value: 'forex' },
   { label: 'Trading', value: 'trading' },
-  { label: 'DO NOT REMOVE THIS LINE, THIS IS TO AVOID MERGE CONFLICT, PLEASE ADD NEW SCAM ABOVE THIS LINE, TQ', value: 'PLEASE ADD MORE SCAM ABOVE OF THIS LINE' },
+  {
+    label: 'DO NOT REMOVE THIS LINE, THIS IS TO AVOID MERGE CONFLICT, PLEASE ADD NEW SCAM ABOVE THIS LINE, TQ',
+    value: 'PLEASE ADD MORE SCAM ABOVE OF THIS LINE',
+  },
 ];
 
 type AddScamFormProps = {
@@ -271,7 +274,6 @@ export default function AddScamForm({ fileKey, setFileKey, setCreateScamSuccess 
 
   // eslint-disable-next-line consistent-return
   async function onSubmit(values: CreateScamSchema) {
-
     const filtered = sanitizeObject({
       description: values.description,
       name: values.name,
@@ -293,7 +295,7 @@ export default function AddScamForm({ fileKey, setFileKey, setCreateScamSuccess 
       .then(res => {
         if (res.status === 201) {
           setCreateScamSuccess(true);
-          
+
           toast('Scam added!', {
             description: 'Scam has been added successfully, please wait for admin approval',
           });
@@ -336,7 +338,6 @@ export default function AddScamForm({ fileKey, setFileKey, setCreateScamSuccess 
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="description"
@@ -351,7 +352,6 @@ export default function AddScamForm({ fileKey, setFileKey, setCreateScamSuccess 
               </FormItem>
             )}
           />
-
           <div className="flex items-center space-x-2 py-2">
             <Checkbox
               id="scam-platform"
@@ -365,7 +365,6 @@ export default function AddScamForm({ fileKey, setFileKey, setCreateScamSuccess 
               This scam is being done at a platform
             </label>
           </div>
-
           {openScamPlatform ? (
             <>
               <div className="py-2">
@@ -417,7 +416,6 @@ export default function AddScamForm({ fileKey, setFileKey, setCreateScamSuccess 
           ) : (
             ''
           )}
-
           <FormField
             control={form.control}
             name="tags"
@@ -460,15 +458,13 @@ export default function AddScamForm({ fileKey, setFileKey, setCreateScamSuccess 
               </FormItem>
             )}
           />
-
-          <div className="">
-            <FormLabel>Upload some picture</FormLabel>
-            <UploadForm fileKey={fileKey} setFileKey={setFileKey} />
+          <FormLabel>Upload some picture</FormLabel>
+          <UploadForm fileKey={fileKey} setFileKey={setFileKey} />
+          <div className='pt-12'>
+            <Button type="submit" disabled={createScamMutation.isPending}>
+              {createScamMutation.isPending ? 'Loading' : 'Submit'}
+            </Button>{' '}
           </div>
-
-          <Button type="submit" disabled={createScamMutation.isPending}>
-            {createScamMutation.isPending ? 'Loading' : 'Submit'}
-          </Button>
         </form>
       </Form>
     </>

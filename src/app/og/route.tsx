@@ -38,8 +38,6 @@ export async function GET(req: NextRequest) {
         flexDirection: 'column',
         flexWrap: 'nowrap',
         backgroundColor: 'black',
-        backgroundImage:
-          'radial-gradient(circle at 25px 25px, lightgray 2%, transparent 0%), radial-gradient(circle at 75px 75px, lightgray 2%, transparent 0%)',
         backgroundSize: '100px 100px',
       }}
     >
