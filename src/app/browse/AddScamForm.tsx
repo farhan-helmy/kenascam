@@ -111,6 +111,8 @@ const OPTIONS = [
   { label: 'Quid Pro Quo', value: 'quid-pro-quo' },
   { label: 'Charity', value: 'charity' },
   { label: 'Gold', value: 'gold' },
+  { label: 'Carousell', value: 'carousell'},
+  { label: 'Lazada', value: 'lazada'},
   { label: 'Vehicle', value: 'vehicle' },
   { label: 'Employment', value: 'employment'},
   { label: 'Forex', value: 'forex' },
