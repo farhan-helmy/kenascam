@@ -301,6 +301,8 @@ export default function ScamDetails({ id, adminSecret }: { id: string; adminSecr
     }
   }, [adminSecret]);
 
+  console.log(isAdmin);
+
   const removeScam = async () => {
     deleteScam({ id, adminSecret }).then(() => {
       router.push('/');
@@ -319,7 +321,7 @@ export default function ScamDetails({ id, adminSecret }: { id: string; adminSecr
   return (
     <div className="md:grid md:grid-cols-3 lg:grid lg:grid-cols-3 xl:grid xl:grid-cols-3">
       <button className="absolute left-1 top-1">
-        <X className="h-6 w-6 text-white hover:text-gray-500" onClick={() => router.back()} />
+        <X className="h-6 w-6 text-white hover:text-gray-500" onClick={() => router.push('/browse')} />
       </button>
       <div className="md:col-span-2 lg:col-span-2 xl:col-span-2">
         <ImageGallery images={scam.data?.images as ImageType[]} />
@@ -330,7 +332,7 @@ export default function ScamDetails({ id, adminSecret }: { id: string; adminSecr
         </div>
         {isAdmin ? (
           <div className="flex items-center justify-center pt-2">
-            <button type='button' onClick={() => removeScam()} className="cursor-pointer">
+            <button type="button" onClick={() => removeScam()} className="cursor-pointer">
               <Trash2Icon className="text-red-500" />
             </button>
           </div>
