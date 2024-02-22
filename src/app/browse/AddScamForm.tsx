@@ -59,7 +59,7 @@ const OPTIONS = [
   { label: 'Mule Account', value: 'mule-account' },
   { label: 'Casino', value: 'casino' },
   { label: 'Gamble', value: 'gamble' },
-  { label: 'Online Auction', value: 'online-action' },
+  { label: 'Online Auction', value: 'online-auction' },
   { label: 'Advance Fee', value: 'advance-fee' },
   { label: 'Smartphone', value: 'smartphone' },
   { label: 'False  Tech Support', value: 'false-tech-support' },
@@ -120,6 +120,7 @@ const OPTIONS = [
   { label: 'Employment', value: 'employment' },
   { label: 'Forex', value: 'forex' },
   { label: 'Trading', value: 'trading' },
+  { label: 'Affiliate', value: 'affiliate' },
   {
     label: 'DO NOT REMOVE THIS LINE, THIS IS TO AVOID MERGE CONFLICT, PLEASE ADD NEW SCAM ABOVE THIS LINE, TQ',
     value: 'PLEASE ADD MORE SCAM ABOVE OF THIS LINE',
