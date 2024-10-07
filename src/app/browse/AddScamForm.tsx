@@ -64,7 +64,6 @@ const OPTIONS = [
   { label: 'Smartphone', value: 'smartphone' },
   { label: 'False  Tech Support', value: 'false-tech-support' },
   { label: 'Property Rental', value: 'property-rental' },
-  { label: 'Smartphone', value: 'smartphone' },
   { label: 'Local Authorities', value: 'local-authorities' },
   { label: 'Parcel', value: 'parcel' },
   { label: 'Charity Fraud', value: 'charity-fraud' },
